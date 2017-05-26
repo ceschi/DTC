@@ -34,8 +34,8 @@ chi = 	.95;		  % AR coefficient for output - in case
 ybar=	1;			  % mean for output process
 
 % persistence for AR shock processes
-rho_ee_s = .85;
-rho_pc_s = .85;
+rho_ee_s = .96;
+rho_pc_s = .86;
 
 % tuning parameters
 sigm	=  1.5;     	  	  % reaction to inflation param, Taylor (previously betheta, check and replace)
@@ -92,7 +92,7 @@ check(solve_algo=2, qz_zero_threshold=1e-10);
 
 % simulation part, order 1 Taylor expansion
 
-stoch_simul(order=1, nocorr, solve_algo=2, irf=40, periods=50000); % Stochastic sim.
+stoch_simul(order=1, nocorr, solve_algo=2, irf=20, periods=50000); % Stochastic sim.
 %simul(periods = 10000);			% deterministic sim.
 
 % TO PLOT INFLATION PATH

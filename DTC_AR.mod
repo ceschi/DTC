@@ -6,7 +6,6 @@
 %               money is not state var here
 
 
-
 % DECLARING VARIABLES
 % in the baseline version setting m as
 % a predermined var does not satisfy rank condition
@@ -87,7 +86,7 @@ end;
 %steady;
 
 
-% model status check, Sims algo, lower threshold for Jacobian matrix
+% model status check, Sims algo, higher threshold for Jacobian matrix
 check(solve_algo=2, qz_zero_threshold=1e-10);
 
 % simulation part, order 1 Taylor expansion

@@ -1,0 +1,3 @@
+Starting Dynare (version 4.4.3).
+Starting preprocessing of the model file ...
+ERROR in macro-processor: DTC_TR.mod:115.3-6: @#else is not matched by an @#if/@#ifdef/@#ifndef statement

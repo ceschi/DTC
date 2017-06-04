@@ -1,3 +1,73 @@
 Starting Dynare (version 4.4.3).
 Starting preprocessing of the model file ...
-ERROR in macro-processor: DTC_TR.mod:115.3-6: @#else is not matched by an @#if/@#ifdef/@#ifndef statement
+Found 8 equation(s).
+Evaluating expressions...done
+Computing static model derivatives:
+ - order 1
+Computing dynamic model derivatives:
+ - order 1
+Processing outputs ...done
+Preprocessing completed.
+Starting MATLAB/Octave computing.
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('print_info', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\print_info.m', 80)" style="font-weight:bold">print_info</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\print_info.m',80,0)">line 80</a>)
+The steady state contains NaN or Inf
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('check', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\check.m', 76)" style="font-weight:bold">check</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\check.m',76,0)">line 76</a>)
+    print_info(info, 0, options);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 168)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',168,0)">line 168</a>)
+oo_.dr.eigval = check(M_,options_,oo_);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)
+evalin('base',fname) ;
+} 
+dynare DTC_TR.mod
+
+Configuring Dynare ...
+[mex] Generalized QZ.
+[mex] Sylvester equation solution.
+[mex] Kronecker products.
+[mex] Sparse kronecker products.
+[mex] Local state space iteration (second order).
+[mex] Bytecode evaluation.
+[mex] k-order perturbation solver.
+[mex] k-order solution simulation.
+[mex] Quasi Monte-Carlo sequence (Sobol).
+[mex] Markov Switching SBVAR.
+
+Starting Dynare (version 4.4.3).
+Starting preprocessing of the model file ...
+Found 8 equation(s).
+Evaluating expressions...done
+Computing static model derivatives:
+ - order 1
+Computing dynamic model derivatives:
+ - order 1
+Processing outputs ...done
+Preprocessing completed.
+Starting MATLAB/Octave computing.
+
+[Warning: The file 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m' could not be cleared because it contains
+MATLAB code that is currently executing.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
+[Warning: The file 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m' could not be cleared because it contains MATLAB code
+that is currently executing.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
+[Warning: The file 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m' could not be cleared because it contains
+MATLAB code that is currently executing.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
+[Warning: The file 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m' could not be cleared because it contains MATLAB code
+that is currently executing.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
+[Warning: The file 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m' could not be cleared because it contains
+MATLAB code that is currently executing.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
+[Warning: The file 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m' could not be cleared because it contains MATLAB code
+that is currently executing.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
+  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 

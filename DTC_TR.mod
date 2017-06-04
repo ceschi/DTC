@@ -9,7 +9,7 @@
 % 
 % V0.2
 
-@#define type_taylor = 0
+@#define type_taylor = 1
 % defines a macro-variable to select among 
 % different specification of the TR: 
 %  - 0 for standard model 
@@ -19,43 +19,43 @@
 %%% VARIABLES DECLARATION %%%
 
 % endogeneous variables
-var z				${z}$						(longname='total liquidity')
-	c 	 			${c}$						(longname='consumption')
-	m 				${m}$						(longname='money')
-	infl			${\pi}$						(longname='inflation')
-	output			${y}$						(longname='output')
-	e_ee			${\varepsilon^{EE}}$		(longname='Euler eqn shock')
-	e_pc			${\varepsilon^{PS}}$		(longname='Phillips curve shock')
-	s 				${s}$						(longname='Liquid bond yield')
+var z				%${z}$						(longname='total liquidity')
+	c 	 			%${c}$						(longname='consumption')
+	m 				%${m}$						(longname='money')
+	infl			%${\pi}$						(longname='inflation')
+	output			%${y}$						(longname='output')
+	e_ee			%${\varepsilon^{EE}}$		(longname='Euler eqn shock')
+	e_pc			%${\varepsilon^{PS}}$		(longname='Phillips curve shock')
+	s 				%${s}$						(longname='Liquid bond yield and policy tool')
 ;
 
 predetermined_variables z;
 % declares predetermined (state) variables
 
 % exogeneous variables
-varexo shock_e_ee	${\nu^{EE}}$				(longname='EE AR shock')
-	   shock_e_pc	${\nu^{PC}}$				(longname='PC AR shock')
-	   e_out		${\nu^{y}}$					(longname='output shock')
+varexo shock_e_ee	%${\nu^{EE}}$				(longname='EE AR shock')
+	   shock_e_pc	%${\nu^{PC}}$				(longname='PC AR shock')
+	   e_out		%${\nu^{y}}$					(longname='output shock')
 @#if type_taylor == 1
-	   shock_pol	${\nu^{pol}}$				(longname='Shock to monpol rule on ')
+	   shock_pol	%${\nu^{pol}}$				(longname='Shock to monpol rule on ')
 @#endif
 ;
 
 
 %%% DECLARING PARAMETER SET AND VALUES %%%
 
-parameters eta			${\eta}$				(longname='Relative risk aversion parameter')
-		   bet			${\beta}$				(longname='discount factor')
-		   theta		${\theta}$				(longname='Policy parameter, reaction to inflation in TR')
-		   mu			${\mu}$					(longname='Policy parameter, reaction to real slack')
-		   sigm			${\sigma}$				(longname='Calvo price update frequency')		% this parameter is usually labelled kappa
-		   chi			${\chi}$				(longname='Persistence of output gap')
-		   rho_ee_s		${\rho_{\varepsilon_{EE}}}	(longname='Persistence of II order shock to EE')
-		   rho_pc_s		${\rho_{\varepsilon_{PC}}}	(longname='Persistence of II order shock to PC')
-		   ybar			${\bar{y}}$				(longname='Mean for output')
+parameters eta			%${\eta}$				(longname='Relative risk aversion parameter')
+		   bet			%${\beta}$				(longname='discount factor')
+		   theta		%${\theta}$				(longname='Policy parameter, reaction to inflation in TR')
+		   mu			%${\mu}$					(longname='Policy parameter, reaction to real slack')
+		   sigm			%${\sigma}$				(longname='Calvo price update frequency')		% this parameter is usually labelled kappa
+		   chi			%${\chi}$				(longname='Persistence of output gap')
+		   rho_ee_s		%${\rho_{\varepsilon_{EE}}}	(longname='Persistence of II order shock to EE')
+		   rho_pc_s		%${\rho_{\varepsilon_{PC}}}	(longname='Persistence of II order shock to PC')
+		   ybar			%${\bar{y}}$				(longname='Mean for output')
 @#if type_taylor == 1
-		   omega		${\omega}$				(longname='TR real part when type_taylor=1')
-		   rho 			${\rho_{\pi}}$			(longname='policy rate smoothing when type_taylor=1')
+		   omega		%${\omega}$				(longname='TR real part when type_taylor=1')
+		   rho 			%${\rho_{\pi}}$			(longname='policy rate smoothing when type_taylor=1')
 @#endif
 ;
 
@@ -72,8 +72,8 @@ ybar=	1;
 
 % persistence for AR shock processes
 % setting these to 0 reproduces original model
-rho_ee_s = .95;
-rho_pc_s = .85;
+rho_ee_s =	0;% .95;
+rho_pc_s =	0;% .85;
 
 
 % tuning parameters
@@ -110,11 +110,10 @@ e_ee = rho_ee_s*e_ee(-1) + shock_e_ee;
 %% TR and depending eqns
 @#if type_taylor == 0
 	s=theta*infl(+1);
-	% policy rule as specified in the paper
-
-@#else  % !!! -- EXPERIMENT & TUNING HERE -- !!!
+	//% policy rule as specified in the paper
+@#else  //% !!! -- EXPERIMENT & TUNING HERE -- !!!
 	s=theta*infl(+1) + omega * (c-output) + rho * s(-1) + shock_pol;
-	% policy rule as specified in the paper
+	//% policy rule as specified in the paper
 @#endif
 end;
 
@@ -127,6 +126,8 @@ c=output;
 m=1/((1-bet)*c^(-eta));
 z=2*m;
 s=theta*infl;
+e_pc=0;
+e_ee=0;
 end;
 
 % alternatively, have the SS solved numerically
@@ -155,7 +156,7 @@ check(solve_algo=2, qz_zero_threshold=1e-10);
 stoch_simul(order=1,			% order of Taylor expansion
 			nocorr,				% do not output correlation matrix
 			solve_algo=2,		% nonlinear solver: 0=fsolve, matlab's own; 1=Dynare's own; 2=Dynare's own but block-recursive; 3=Sim's...
-			irf=100,			% periods to include in IRFs' plots
+			irf=20,			% periods to include in IRFs' plots
 			periods=50000,		% number of periods to use in the simulations
 			drop=10000,			% burn-in sample
 			replic=50			% number of series to compute IRFs

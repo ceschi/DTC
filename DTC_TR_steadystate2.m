@@ -4,8 +4,8 @@ function [ys_, params, info] = DTC_TR_steadystate2(ys_, exo_, params)
     ys_(4)=0;
     ys_(5)=params(9);
     ys_(2)=ys_(5);
-    ys_(3)=1/((1-params(2))*ys_(2)^(-params(1)));
-    ys_(1)=2*ys_(3);
+    ys_(3)=(params(10)*ys_(2)^params(1)/(1-params(2)))^(1/(1-params(10)));
+    ys_(1)=ys_(3)+1/(params(10)*ys_(3)^(params(10)-1)-params(2)*exo_(4)*ys_(2)^(-params(1)));
     ys_(7)=0;
     ys_(6)=0;
     % Auxiliary equations

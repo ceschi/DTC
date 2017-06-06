@@ -75,10 +75,13 @@ M_.param_names_long = char(M_.param_names_long, 'rho_pc_s');
 M_.param_names = char(M_.param_names, 'ybar');
 M_.param_names_tex = char(M_.param_names_tex, 'ybar');
 M_.param_names_long = char(M_.param_names_long, 'ybar');
+M_.param_names = char(M_.param_names, 'alp');
+M_.param_names_tex = char(M_.param_names_tex, 'alp');
+M_.param_names_long = char(M_.param_names_long, 'alp');
 M_.exo_det_nbr = 0;
 M_.exo_nbr = 4;
 M_.endo_nbr = 7;
-M_.param_nbr = 9;
+M_.param_nbr = 10;
 M_.orig_endo_nbr = 7;
 M_.aux_vars = [];
 M_.predetermined_variables = [ 1 ];
@@ -119,7 +122,7 @@ oo_.steady_state = zeros(7, 1);
 M_.maximum_exo_lag = 0;
 M_.maximum_exo_lead = 0;
 oo_.exo_steady_state = zeros(4, 1);
-M_.params = NaN(9, 1);
+M_.params = NaN(10, 1);
 M_.NNZDerivatives = zeros(3, 1);
 M_.NNZDerivatives(1) = 27;
 M_.NNZDerivatives(2) = 0;
@@ -142,6 +145,8 @@ M_.params( 5 ) = 1.5;
 sigm = M_.params( 5 );
 M_.params( 3 ) = 1.5;
 theta = M_.params( 3 );
+M_.params( 10 ) = .33;
+alp = M_.params( 10 );
 %
 % INITVAL instructions
 %
@@ -157,18 +162,27 @@ end;
 % SHOCKS instructions
 %
 make_ex_;
-set_shocks(0,4, 4, 10);
+set_shocks(0,50, 4, 1.05);
 M_.exo_det_length = 0;
 M_.Sigma_e(1, 1) = (.0)^2;
 M_.Sigma_e(2, 2) = (.0)^2;
-M_.Sigma_e(3, 3) = (.00)^2;
-options_.qz_zero_threshold = 1e-10;
-options_.solve_algo = 2;
-oo_.dr.eigval = check(M_,options_,oo_);
+M_.Sigma_e(3, 3) = (.01)^2;
 options_.periods = 100;
 simul();
 var_list_=[];
 var_list_ = 'c';
+rplot(var_list_);
+var_list_=[];
+var_list_ = 'y';
+rplot(var_list_);
+var_list_=[];
+var_list_ = 'm';
+rplot(var_list_);
+var_list_=[];
+var_list_ = 'z';
+rplot(var_list_);
+var_list_=[];
+var_list_ = 'infl';
 rplot(var_list_);
 save('DTC_TR_results.mat', 'oo_', 'M_', 'options_');
 if exist('estim_params_', 'var') == 1

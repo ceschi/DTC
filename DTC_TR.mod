@@ -59,6 +59,7 @@ parameters eta			%${\eta}$				(longname='Relative risk aversion parameter')
 		   omega		%${\omega}$				(longname='TR real part when type_taylor=1')
 		   rho 			%${\rho_{\pi}}$			(longname='policy rate smoothing when type_taylor=1')
 @#endif
+		   alp  % trying
 ;
 
 % Parametrization/calibration
@@ -86,6 +87,7 @@ rho_pc_s =	0;%.85;
 sigm	=  1.5; 
 theta	=  1.5;
 
+alp= .33;
 
 
 %%% MODEL BLOCK %%%
@@ -96,13 +98,13 @@ model;
 z(+1)=z/(1+infl(+1));
 % total real liquidity
 
-c^(-eta)=c(+1)^(-eta)*bet*((1/m)/(bet*c(+1)^(-eta)) + 1/(1+infl(+1))) + e_ee;
+c^(-eta)=c(+1)^(-eta)*bet*((alp*m^(alp-1))/(bet*c(+1)^(-eta)) + 1/(1+infl(+1))) + e_ee;
 % Euler equation for consumption -- with shock
 
 infl=sigm*infl(+1) + mu*(c-y) + e_pc;
 % Phillips curve / inflation evolution -- with shock
 
-1/(z-m) - 1/m = -(bet * c(+1)^(-eta) * s)/(1+infl(+1));
+1/(z-m) - alp*m^(alp-1) = -(bet * c(+1)^(-eta) * s)/(1+infl(+1));
 % implicit money demand
 
 y = (1-chi)*ybar + chi*y(-1) + e_out;
@@ -132,8 +134,9 @@ steady_state_model;
 infl=0;
 y=ybar;
 c=y;
-m=1/((1-bet)*c^(-eta));
-z=2*m;
+%m=1/((1-bet)*c^(-eta));
+m=((alp*c^eta)/(1-bet))^(1/(1-alp));
+z=m + 1/(alp*m^(alp-1) - bet*s*c^(-eta));
 %s=theta*infl;
 e_pc=0;
 e_ee=0;
@@ -157,22 +160,26 @@ initval;
 s=1;
 end;
 
+//endval;
+//s=5;
+//end;
+
 %%%% SHOCKS' MOMENTS %%%%
 shocks;
 var shock_e_ee; 		  stderr .0;
 var shock_e_pc; 		  stderr .0;
-var e_out;    	 		  stderr .00;
+var e_out;    	 		  stderr .01;
 @#if type_taylor == 1
 	var shock_pol; 		  stderr .1;
 @#endif
 
 % temporary shock at t=50, s jumps at 1 and then back to 0
-var s;    periods 4;		values 10;
+var s;    periods 50;		values 1.05;
 
 end;
 
 % model status check, Sims algo, higher threshold for Jacobian matrix
-check(solve_algo=2, qz_zero_threshold=1e-10);
+%check(solve_algo=2, qz_zero_threshold=1e-10);
 
 %%% SIMULATIONS %%%
 
@@ -190,3 +197,7 @@ simul(periods=100);
 //			)  y m c infl z;
 
 rplot c;
+rplot y;
+rplot m;
+rplot z;
+rplot infl;

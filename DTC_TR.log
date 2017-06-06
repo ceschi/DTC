@@ -9,3 +9,14 @@ Computing dynamic model derivatives:
 Processing outputs ...done
 Preprocessing completed.
 Starting MATLAB/Octave computing.
+-----------------------------------------------------
+MODEL SIMULATION:
+
+
+Simulation concluded successfully after 3 iterations.
+Total time of simulation        :      0.035
+Convergency obtained.
+-----------------------------------------------------
+
+Total computing time : 0h00m04s
+Note: warning(s) encountered in MATLAB/Octave code

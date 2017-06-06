@@ -52,7 +52,7 @@ parameters eta			%${\eta}$				(longname='Relative risk aversion parameter')
 		   chi			%${\chi}$				(longname='Persistence of output gap')
 		   rho_ee_s		%${\rho_{\varepsilon_{EE}}}	(longname='Persistence of II order shock to EE')
 		   rho_pc_s		%${\rho_{\varepsilon_{PC}}}	(longname='Persistence of II order shock to PC')
-		   ybar			%${\bar{y}}$				(longname='Mean for output')
+		   ybar			%${\bar{y}}$				(longname='Mean for output to mimic natural output level')
 @#if type_taylor == 1
 		   omega		%${\omega}$				(longname='TR real part when type_taylor=1')
 		   rho 			%${\rho_{\pi}}$			(longname='policy rate smoothing when type_taylor=1')
@@ -66,14 +66,18 @@ bet =	0.975;
 mu =	0.93;
 
 % optional parameters
-rho =	 .9;
+@#if type_taylor == 1
+	omega = 1.5;
+	rho =	 .9;
+@#endif
+
 chi = 	 .95;
 ybar=	1;
 
 % persistence for AR shock processes
 % setting these to 0 reproduces original model
-rho_ee_s =	0;% .95;
-rho_pc_s =	0;% .85;
+rho_ee_s =	.95;
+rho_pc_s =	.85;
 
 
 % tuning parameters
@@ -111,7 +115,10 @@ e_ee = rho_ee_s*e_ee(-1) + shock_e_ee;
 @#if type_taylor == 0
 	s=theta*infl(+1);
 	//% policy rule as specified in the paper
-@#else  //% !!! -- EXPERIMENT & TUNING HERE -- !!!
+@#endif
+
+@#if type_taylor == 1
+    //% !!! -- EXPERIMENT & TUNING HERE -- !!!
 	s=theta*infl(+1) + omega * (c-output) + rho * s(-1) + shock_pol;
 	//% policy rule as specified in the paper
 @#endif

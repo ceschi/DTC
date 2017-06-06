@@ -13,96 +13,13 @@ Starting MATLAB/Octave computing.
 EIGENVALUES:
          Modulus             Real        Imaginary
 
-             0.2              0.2                0
-             0.6              0.6                0
-          0.6667           0.6667                0
+          0.2981           0.2981                0
+            0.85             0.85                0
+          0.8961           0.8961                0
             0.95             0.95                0
-               1                1                0
-           1.026            1.026                0
-
-
-There are 1 eigenvalue(s) larger than 1 in modulus 
-for 2 forward-looking variable(s)
-
-The rank condition ISN'T verified!
-
-{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('print_info', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\print_info.m', 45)" style="font-weight:bold">print_info</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\print_info.m',45,0)">line 45</a>)
-Blanchard Kahn conditions are not satisfied: indeterminacy
-
-Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('stoch_simul', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\stoch_simul.m', 98)" style="font-weight:bold">stoch_simul</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\stoch_simul.m',98,0)">line 98</a>)
-    print_info(info, options_.noprint, options_);
-
-Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 170)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',170,0)">line 170</a>)
-info = stoch_simul(var_list_);
-
-Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)
-evalin('base',fname) ;
-} 
-cleaner
-[Warning: The file 'D:\emanu\OneDrive\Matlab\Additional M routines\cleaner.m' could not be cleared because it contains
-MATLAB code that is currently executing.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('cleaner', 'D:\emanu\OneDrive\Matlab\Additional M routines\cleaner.m', 2)" style="font-weight:bold">cleaner</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Additional M routines\cleaner.m',2,0)">line 2</a>)] 
-[Warning: The file 'D:\emanu\OneDrive\Matlab\Additional M routines\cleaner.m' could not be cleared because it contains
-MATLAB code that is currently executing.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('cleaner', 'D:\emanu\OneDrive\Matlab\Additional M routines\cleaner.m', 2)" style="font-weight:bold">cleaner</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Additional M routines\cleaner.m',2,0)">line 2</a>)] 
-[Warning: The file 'D:\emanu\OneDrive\Matlab\Additional M routines\cleaner.m' could not be cleared because it contains
-MATLAB code that is currently executing.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('cleaner', 'D:\emanu\OneDrive\Matlab\Additional M routines\cleaner.m', 2)" style="font-weight:bold">cleaner</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Additional M routines\cleaner.m',2,0)">line 2</a>)] 
-dynare DTC_TR.mod
-
-Configuring Dynare ...
-[mex] Generalized QZ.
-[mex] Sylvester equation solution.
-[mex] Kronecker products.
-[mex] Sparse kronecker products.
-[mex] Local state space iteration (second order).
-[mex] Bytecode evaluation.
-[mex] k-order perturbation solver.
-[mex] k-order solution simulation.
-[mex] Quasi Monte-Carlo sequence (Sobol).
-[mex] Markov Switching SBVAR.
-
-Starting Dynare (version 4.4.3).
-Starting preprocessing of the model file ...
-Found 8 equation(s).
-Evaluating expressions...done
-Computing static model derivatives:
- - order 1
-Computing dynamic model derivatives:
- - order 1
-Processing outputs ...done
-Preprocessing completed.
-Starting MATLAB/Octave computing.
-
-[Warning: The file 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m' could not be cleared because it contains MATLAB code that is currently executing.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
-  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
-[Warning: The file 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m' could not be cleared because it contains MATLAB code that is currently executing.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
-  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
-[Warning: The file 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m' could not be cleared because it contains MATLAB code that is currently executing.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
-  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
-[Warning: The file 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m' could not be cleared because it contains MATLAB code that is currently executing.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
-  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
-[Warning: The file 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m' could not be cleared because it contains MATLAB code that is currently executing.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
-  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
-[Warning: The file 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m' could not be cleared because it contains MATLAB code that is currently executing.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('DTC_TR', 'D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m', 7)" style="font-weight:bold">DTC_TR</a> (<a href="matlab: opentoline('D:\emanu\OneDrive\Matlab\Dynare\DTC\DTC_TR.m',7,0)">line 7</a>)
-  In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m', 180)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Program Files (x86)\Dynare\4.4.3\matlab\dynare.m',180,0)">line 180</a>)] 
-
-EIGENVALUES:
-         Modulus             Real        Imaginary
-
-               0               -0                0
-               0               -0                0
-          0.2901           0.2901                0
             0.95             0.95                0
-          0.9909           0.9909                0
-            1.25             1.25                0
-           1.712            1.712                0
+           1.094            1.094                0
+           3.511            3.511                0
 
 
 There are 2 eigenvalue(s) larger than 1 in modulus 
@@ -131,38 +48,40 @@ shock_pol       0.000000    0.000000    0.000000    0.010000
 POLICY AND TRANSITION FUNCTIONS
                                   z               c               m               infl            output          e_ee            e_pc            s     
 Constant                   80.000000        1.000000       40.000000               0        1.000000               0               0               0
-z(-1)                       0.981921        0.000180        0.024616        0.000507               0               0               0        0.000609
-output(-1)                  3.607414        0.890530      122.338140       -0.122946        0.950000               0               0       -0.156844
-s(-1)                      10.247876       -0.272451     -233.356954       -0.445527               0               0               0        0.299176
-shock_e_ee                -12.287622       -0.392744      279.804501       -0.134859               0        1.000000               0       -0.358724
-shock_e_pc                         0               0               0        1.000000               0               0        1.000000               0
-e_out                       3.797278        0.937400      128.776990       -0.129417        1.000000               0               0       -0.165099
-shock_pol                  11.386529       -0.302724     -259.285504       -0.495030               0               0               0        0.332417
+z(-1)                       0.880455        0.001542       -0.984830        0.002181               0               0               0        0.001904
+output(-1)                 22.361365        0.633064      294.419368       -0.434509        0.950000               0               0       -0.377461
+e_ee(-1)                  218.133052       -3.091684     2872.033830       -4.238598               0        0.950000               0       -3.682095
+e_pc(-1)                 -107.293263        0.695135     -929.708795        2.167059               0               0        0.850000        1.191934
+s(-1)                       4.782912       -0.208550     -244.681593       -0.223845               0               0               0        0.313694
+shock_e_ee                229.613739       -3.254404     3023.193505       -4.461682               0        1.000000               0       -3.875889
+shock_e_pc               -126.227368        0.817806    -1093.775053        2.549481               0               0        1.000000        1.402276
+e_out                      23.538278        0.666383      309.915124       -0.457378        1.000000               0               0       -0.397327
+shock_pol                   9.565824       -0.417100     -489.363185       -0.447689               0               0               0        0.627389
 
 
 MOMENTS OF SIMULATED VARIABLES
 
-VARIABLE       MEAN      STD. DEV.     VARIANCE     SKEWNESS     KURTOSIS  
-z             79.665994    17.550270   308.011969     0.015240     0.016668
-c              0.999689     0.060686     0.003683     0.002700    -0.022812
-m             40.045613    40.624411  1650.342761     0.009221    -0.006377
-infl           0.000721     0.114470     0.013103    -0.012377    -0.016939
-output         0.999513     0.032316     0.001044     0.047799     0.079878
-e_ee          -0.000096     0.099956     0.009991    -0.009092    -0.025560
-e_pc           0.000540     0.100013     0.010003    -0.005080    -0.000503
-s             -0.000272     0.054499     0.002970    -0.019318     0.009417
+VARIABLE        MEAN        STD. DEV.       VARIANCE       SKEWNESS       KURTOSIS   
+z               71.167908     531.697053  282701.756673       0.084971       0.017550
+c                0.997417       0.473985       0.224662      -0.012029      -0.044262
+m               38.935775     883.817499  781133.372169       0.057846      -0.033780
+infl             0.001395       0.749929       0.562393      -0.013481       0.004498
+output           0.999513       0.032316       0.001044       0.047799       0.079878
+e_ee            -0.002285       0.324247       0.105136       0.104697       0.013980
+e_pc             0.003621       0.188414       0.035500      -0.048001       0.137397
+s               -0.004326       1.058234       1.119860      -0.024708      -0.023087
 
 
 AUTOCORRELATION OF SIMULATED VARIABLES
 
 VARIABLE      1       2       3       4       5   
-z           0.9950  0.9871  0.9784  0.9695  0.9606
-c           0.2565  0.2516  0.2487  0.2349  0.2228
-m           0.3194  0.1231  0.0630  0.0446  0.0414
-infl        0.0472  0.0145  0.0031 -0.0037 -0.0022
+z           0.9966  0.9881  0.9752  0.9588  0.9396
+c           0.6817  0.5284  0.4347  0.3587  0.2977
+m           0.9221  0.8116  0.7026  0.6029  0.5150
+infl        0.7156  0.5571  0.4495  0.3598  0.2877
 output      0.9507  0.9039  0.8598  0.8179  0.7777
-e_ee       -0.0009 -0.0015  0.0036 -0.0008  0.0033
-e_pc       -0.0053  0.0064 -0.0010 -0.0045 -0.0018
-s           0.3917  0.2155  0.1609  0.1436  0.1397
-Total computing time : 0h00m10s
+e_ee        0.9513  0.9052  0.8616  0.8199  0.7804
+e_pc        0.8475  0.7192  0.6078  0.5128  0.4330
+s           0.9094  0.7839  0.6611  0.5494  0.4514
+Total computing time : 0h00m07s
 Note: warning(s) encountered in MATLAB/Octave code

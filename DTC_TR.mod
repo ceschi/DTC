@@ -66,9 +66,10 @@ bet =	0.975;
 mu =	0.93;
 
 % optional parameters
+
 @#if type_taylor == 1
-	omega = 1.5;
-	rho =	 .9;
+	omega =  .75;
+	rho =	 .5;
 @#endif
 
 chi = 	 .95;
@@ -81,8 +82,8 @@ rho_pc_s =	.85;
 
 
 % tuning parameters
-sigm	=  1.5;
-theta	=  1.5;
+sigm	=  1.5; 
+theta	=  .5;
 
 
 

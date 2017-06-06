@@ -140,21 +140,21 @@ M_.params( 2 ) = 0.975;
 bet = M_.params( 2 );
 M_.params( 4 ) = 0.93;
 mu = M_.params( 4 );
-M_.params( 10 ) = 1.5;
+M_.params( 10 ) = .75;
 omega = M_.params( 10 );
-M_.params( 11 ) = .9;
+M_.params( 11 ) = .5;
 rho = M_.params( 11 );
 M_.params( 6 ) = .95;
 chi = M_.params( 6 );
 M_.params( 9 ) = 1;
 ybar = M_.params( 9 );
-M_.params( 7 ) = 0;
+M_.params( 7 ) = .95;
 rho_ee_s = M_.params( 7 );
-M_.params( 8 ) = 0;
+M_.params( 8 ) = .85;
 rho_pc_s = M_.params( 8 );
-M_.params( 5 ) = 1.5;
+M_.params( 5 ) = .5;
 sigm = M_.params( 5 );
-M_.params( 3 ) = 1.5;
+M_.params( 3 ) = .5;
 theta = M_.params( 3 );
 %
 % SHOCKS instructions

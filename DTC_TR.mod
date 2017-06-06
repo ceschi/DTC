@@ -9,7 +9,7 @@
 % 
 % V0.2
 
-@#define type_taylor = 1
+@#define type_taylor = 0
 % defines a macro-variable to select among 
 % different specification of the TR: 
 %  - 0 for standard model 
@@ -23,10 +23,11 @@ var z				%${z}$						(longname='total liquidity')
 	c 	 			%${c}$						(longname='consumption')
 	m 				%${m}$						(longname='money')
 	infl			%${\pi}$						(longname='inflation')
-	output			%${y}$						(longname='output')
+	y			    %${y}$						(longname='output')
 	e_ee			%${\varepsilon^{EE}}$		(longname='Euler eqn shock')
 	e_pc			%${\varepsilon^{PS}}$		(longname='Phillips curve shock')
-	s 				%${s}$						(longname='Liquid bond yield and policy tool')
+	//%s 				%${s}$						(longname='Liquid bond yield and policy tool')
+	% s is shifted to exo variable to accomodate pegs
 ;
 
 predetermined_variables z;
@@ -39,6 +40,7 @@ varexo shock_e_ee	%${\nu^{EE}}$				(longname='EE AR shock')
 @#if type_taylor == 1
 	   shock_pol	%${\nu^{pol}}$				(longname='Shock to monpol rule on ')
 @#endif
+		s 			%${s}$						(longname='Int. rate peg level')
 ;
 
 
@@ -66,7 +68,6 @@ bet =	0.975;
 mu =	0.93;
 
 % optional parameters
-
 @#if type_taylor == 1
 	omega =  .75;
 	rho =	 .5;
@@ -77,13 +78,13 @@ ybar=	1;
 
 % persistence for AR shock processes
 % setting these to 0 reproduces original model
-rho_ee_s =	.95;
-rho_pc_s =	.85;
+rho_ee_s =	0;%.95;
+rho_pc_s =	0;%.85;
 
 
 % tuning parameters
 sigm	=  1.5; 
-theta	=  .5;
+theta	=  1.5;
 
 
 
@@ -98,13 +99,13 @@ z(+1)=z/(1+infl(+1));
 c^(-eta)=c(+1)^(-eta)*bet*((1/m)/(bet*c(+1)^(-eta)) + 1/(1+infl(+1))) + e_ee;
 % Euler equation for consumption -- with shock
 
-infl=sigm*infl(+1) + mu*(c-output) + e_pc;
+infl=sigm*infl(+1) + mu*(c-y) + e_pc;
 % Phillips curve / inflation evolution -- with shock
 
 1/(z-m) - 1/m = -(bet * c(+1)^(-eta) * s)/(1+infl(+1));
 % implicit money demand
 
-output = (1-chi)*ybar + chi*output(-1) + e_out;
+y = (1-chi)*ybar + chi*y(-1) + e_out;
 % process for the output path
 
 
@@ -113,14 +114,14 @@ e_pc = rho_pc_s*e_pc(-1) + shock_e_pc;
 e_ee = rho_ee_s*e_ee(-1) + shock_e_ee;
 
 %% TR and depending eqns
-@#if type_taylor == 0
-	s=theta*infl(+1);
+//@#if type_taylor == 0
+//	s=theta*infl(+1);
 	//% policy rule as specified in the paper
-@#endif
+//@#endif
 
 @#if type_taylor == 1
     //% !!! -- EXPERIMENT & TUNING HERE -- !!!
-	s=theta*infl(+1) + omega * (c-output) + rho * s(-1) + shock_pol;
+	s=theta*infl(+1) + omega * (c-y) + rho * s(-1) + shock_pol;
 	//% policy rule as specified in the paper
 @#endif
 end;
@@ -129,11 +130,11 @@ end;
 
 steady_state_model;
 infl=0;
-output=ybar;
-c=output;
+y=ybar;
+c=y;
 m=1/((1-bet)*c^(-eta));
 z=2*m;
-s=theta*infl;
+%s=theta*infl;
 e_pc=0;
 e_ee=0;
 end;
@@ -144,14 +145,30 @@ end;
 % 1k iteration for searching SS, solving with Sims algo
 % steady(maxit=1000, solve_algo=2);
 
+
+%%% INITVAL BLOCK %%%
+% declare initial value for s and then implement
+% temporary shock at given period T and 
+% permanent shock thorugh endval block
+% To isolate effects of peg, all other shocks
+% are shut off
+
+initval;
+s=1;
+end;
+
 %%%% SHOCKS' MOMENTS %%%%
 shocks;
-var shock_e_ee; 		  stderr .1;
-var shock_e_pc; 		  stderr .1;
-var e_out;    	 		  stderr .01;
+var shock_e_ee; 		  stderr .0;
+var shock_e_pc; 		  stderr .0;
+var e_out;    	 		  stderr .00;
 @#if type_taylor == 1
 	var shock_pol; 		  stderr .1;
 @#endif
+
+% temporary shock at t=50, s jumps at 1 and then back to 0
+var s;    periods 4;		values 10;
+
 end;
 
 % model status check, Sims algo, higher threshold for Jacobian matrix
@@ -159,13 +176,17 @@ check(solve_algo=2, qz_zero_threshold=1e-10);
 
 %%% SIMULATIONS %%%
 
+simul(periods=100);
+
 
 % stochastic simulations
-stoch_simul(order=1,			% order of Taylor expansion
-			nocorr,				% do not output correlation matrix
-			solve_algo=2,		% nonlinear solver: 0=fsolve, matlab's own; 1=Dynare's own; 2=Dynare's own but block-recursive; 3=Sim's...
-			irf=20,			% periods to include in IRFs' plots
-			periods=50000,		% number of periods to use in the simulations
-			drop=10000,			% burn-in sample
-			replic=50			% number of series to compute IRFs
-			);
+//stoch_simul(order=1,			% order of Taylor expansion
+//			nocorr,				% do not output correlation matrix
+//			solve_algo=2,		% nonlinear solver: 0=fsolve, matlab's own; 1=Dynare's own; 2=Dynare's own but block-recursive; 3=Sim's...
+//			irf=20,			% periods to include in IRFs' plots
+//			periods=100,		% number of periods to use in the simulations
+//			drop=0000,			% burn-in sample
+//			replic=00			% number of series to compute IRFs
+//			)  y m c infl z;
+
+rplot c;

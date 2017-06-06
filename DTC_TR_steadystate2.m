@@ -6,7 +6,6 @@ function [ys_, params, info] = DTC_TR_steadystate2(ys_, exo_, params)
     ys_(2)=ys_(5);
     ys_(3)=1/((1-params(2))*ys_(2)^(-params(1)));
     ys_(1)=2*ys_(3);
-    ys_(8)=ys_(4)*params(3);
     ys_(7)=0;
     ys_(6)=0;
     % Auxiliary equations

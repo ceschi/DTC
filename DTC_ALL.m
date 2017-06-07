@@ -152,6 +152,11 @@ theta = M_.params( 3 );
 %
 options_.initval_file = 0;
 oo_.exo_steady_state( 4 ) = 1;
+oo_.steady_state( 5 ) = 1;
+oo_.steady_state( 2 ) = 1;
+oo_.steady_state( 1 ) = 45.9907361974626;
+oo_.steady_state( 3 ) = 47.0433677764099;
+oo_.steady_state( 4 ) = 0;
 if M_.exo_nbr > 0;
 	oo_.exo_simul = [ones(M_.maximum_lag,1)*oo_.exo_steady_state'];
 end;

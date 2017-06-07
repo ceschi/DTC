@@ -185,26 +185,24 @@ end;
 	@#if type_taylor == 2
 		initval;
 		s=1;
-		/* % Candidate values for initialisation
+		// % Candidate values for initialisation
 		y = 	1;
 		c = 	1;
-		z = 	45,9907361974626;
-		m = 	47,0433677764099;
+		z = 	45.9907361974626;
+		m = 	47.0433677764099;
 		infl = 	0;
-		*/
 		end;
 	@#endif
 
 	@#if type_taylor == 3
 		initval;
 		s=1;
-		/* % Candidate values for initialisation
+		// % Candidate values for initialisation
 		y = 	1;
 		c = 	1;
-		z = 	45,9907361974626;
-		m = 	47,0433677764099;
+		z = 	45.9907361974626;
+		m = 	47.0433677764099;
 		infl = 	0;
-		*/
 		end;
 
 		endval;

@@ -9,13 +9,20 @@
 % 
 % V0.4
 
-@#define type_taylor = 3
+@#define flag_taylor = 3
 % defines a macro-variable to select among 
 % different specification of the TR: 
 %  - 0 for standard model 
 %  - 1 for model with output gap in the TR
 %  - 2 for model with interest rate peg w\ temp shock
 %  - 3 for model with interest rate peg w\ perm shock
+
+@#define flag_start = 0
+% relevant only for flag_taylor = 3, it
+% stts some minor details of the 
+% deterministic simulations
+%  - 0 starting point is selected automatically by Dynare
+%  - 1 system is initialised at SS values
 
 %%% VARIABLES DECLARATION %%%
 
@@ -28,11 +35,11 @@ var z				%${z}$						(longname='total liquidity')
 	e_ee			%${\varepsilon^{EE}}$		(longname='Euler eqn shock')
 	e_pc			%${\varepsilon^{PS}}$		(longname='Phillips curve shock')
 
-	@#if type_taylor == 0
+	@#if flag_taylor == 0
 		s 				%${s}$						(longname='Liquid bond yield and policy tool')
 	@#endif
 
-	@#if type_taylor == 1
+	@#if flag_taylor == 1
 		s 				%${s}$						(longname='Liquid bond yield and policy tool')
 	@#endif	
 ;
@@ -44,15 +51,15 @@ predetermined_variables z;
 varexo shock_e_ee	%${\nu^{EE}}$				(longname='EE AR shock')
 	   shock_e_pc	%${\nu^{PC}}$				(longname='PC AR shock')
 	   e_out		%${\nu^{y}}$					(longname='output shock')
-	@#if type_taylor == 1
+	@#if flag_taylor == 1
 	   		shock_pol	%${\nu^{pol}}$				(longname='Shock to monpol rule on ')
 	@#endif
 
-	@#if type_taylor == 2
+	@#if flag_taylor == 2
 			s 			%${s}$						(longname='Int. rate peg level')
 	@#endif
 
-	@#if type_taylor == 3
+	@#if flag_taylor == 3
 			s 			%${s}$						(longname='Int. rate peg level')
 	@#endif
 ;
@@ -71,9 +78,9 @@ parameters eta			%${\eta}$				(longname='Relative risk aversion parameter')
 		   rho_pc_s		%${\rho_{\varepsilon_{PC}}}	(longname='Persistence of II order shock to PC')
 		   ybar			%${\bar{y}}$				(longname='Mean for output to mimic natural output level')
 		   alp			%${\alpha}$					(longname='Exponent for money utility function')
-	@#if type_taylor == 1
-		   		omega		%${\omega}$				(longname='TR real part when type_taylor=1')
-		   		rho 		%${\rho_{\pi}}$			(longname='policy rate smoothing when type_taylor=1')
+	@#if flag_taylor == 1
+		   		omega		%${\omega}$				(longname='TR real part when flag_taylor=1')
+		   		rho 		%${\rho_{\pi}}$			(longname='policy rate smoothing when flag_taylor=1')
 	@#endif
 ;
 
@@ -85,7 +92,7 @@ mu =	0.93;
 alp =	0.33;
 
 % optional parameters
-@#if type_taylor == 1
+@#if flag_taylor == 1
 	omega =  .75;
 	rho =	 .5;
 @#endif
@@ -130,12 +137,12 @@ e_pc = rho_pc_s*e_pc(-1) + shock_e_pc;
 e_ee = rho_ee_s*e_ee(-1) + shock_e_ee;
 
 %% TR and depending eqns
-	@#if type_taylor == 0
+	@#if flag_taylor == 0
 		s=theta*infl(+1);
 		%/*  policy rule as specified in the paper */ 
 	@#endif
 
-	@#if type_taylor == 1
+	@#if flag_taylor == 1
     	%/*  !!! -- EXPERIMENT & TUNING HERE -- !!! */
 		s=theta*infl(+1) + omega * (c-y) + rho * s(-1) + shock_pol;
 		%/*  policy rule as specified in the paper  */ 
@@ -153,11 +160,11 @@ y=ybar;
 c=y;
 m=((alp*c^(-eta))/(1-bet))^(1/(1-alp));
 
-	@#if type_taylor == 0
+	@#if flag_taylor == 0
 		s=theta*infl;
 	@#endif
 
-	@#if type_taylor == 1
+	@#if flag_taylor == 1
 		s=theta*infl;
 	@#endif
 
@@ -182,10 +189,13 @@ end;
 % To isolate effects of peg, all other shocks
 % ought to be shut off
 
-	@#if type_taylor == 2
+	@#if flag_taylor == 2
 		initval;
 		s=1;
-		// % Candidate values for initialisation
+		/* % Candidate values for initialisation
+		   % coming from end values of free 
+		   % simulations 
+		*/
 		y = 	1;
 		c = 	1;
 		z = 	45.9907361974626;
@@ -194,50 +204,62 @@ end;
 		end;
 	@#endif
 
-	@#if type_taylor == 3
-		initval;
-		s=1;
-		// % Candidate values for initialisation
-		y = 	1;
-		c = 	1;
-		z = 	45.9907361974626;
-		m = 	47.0433677764099;
-		infl = 	0;
-		end;
+	@#if flag_taylor == 3
+		@#if flag_start == 0
+			initval;
+			s=1.00;
+			end;
+		@#endif
 
-		endval;
-		s=1.05;
-		end;
+		@#if flag_start == 1
+			/* 
+			% Candidate values for initialisation:
+			% interestingly, if the system is at SS
+			% before the beginning of the simulations
+			% it behaves slightly differently
+			*/
+			initval;
+			s = 	1;
+			y = 	1;
+			c = 	1;
+			z = 	46.0421162119544;
+			m = 	47.0433677764099;
+			infl = 	0;
+			end;
+		@#endif
+			endval;
+			s=1.05;
+			end;
 	@#endif
 
 
 
 %%%% SHOCKS' MOMENTS %%%%
 shocks;
-	@#if type_taylor == 0
+	@#if flag_taylor == 0
 		var shock_e_ee; 		  stderr .1;
 		var shock_e_pc; 		  stderr .1;
 		var e_out;    	 		  stderr .01;
 	@#endif
 
-	@#if type_taylor == 1
+	@#if flag_taylor == 1
 		var shock_e_ee; 		  stderr .1;
 		var shock_e_pc; 		  stderr .1;
 		var e_out;    	 		  stderr .01;
 		var shock_pol; 		  	  stderr .1;
 	@#endif
 
-	@#if type_taylor == 2
+	@#if flag_taylor == 2
 		var s;    
 		periods 50;		
 		values 1.05;
 		%/* 5% temporary shock at t=50 */
 	@#endif
 
-	@#if type_taylor == 3
+	@#if flag_taylor == 3
 		var s;
-		periods 1:50;
-		values (repmat(1,50,1));
+		periods 0:50;
+		values (repmat(1,51,1));
 		%/* keeps s at 1 until t=50, then permanent increase of 5% */
 	@#endif
 end;
@@ -247,7 +269,7 @@ end;
 %%% SIMULATIONS %%%
 
 %/* stochastic simulations */
-	@#if type_taylor == 0
+	@#if flag_taylor == 0
 		stoch_simul(order=1,			% order of Taylor expansion
 					nocorr,				% do not output correlation matrix
 					solve_algo=2,		% nonlinear solver: 0=fsolve, matlab's own; 1=Dynare's own; 2=Dynare's own but block-recursive; 3=Sim's...
@@ -258,7 +280,7 @@ end;
 					)  y m c infl z;
 	@#endif
 
-	@#if type_taylor == 1
+	@#if flag_taylor == 1
 		stoch_simul(order=1,			% order of Taylor expansion
 					nocorr,				% do not output correlation matrix
 					solve_algo=2,		% nonlinear solver: 0=fsolve, matlab's own; 1=Dynare's own; 2=Dynare's own but block-recursive; 3=Sim's...
@@ -270,7 +292,7 @@ end;
 	@#endif
 
 %/* determiniestic simulations */
-	@#if type_taylor == 2
+	@#if flag_taylor == 2
 		simul(periods=100);				% 100 periods are simulated deterministically
 		rplot c;
 		rplot y;
@@ -279,7 +301,7 @@ end;
 		rplot infl;
 	@#endif
 
-	@#if type_taylor == 3
+	@#if flag_taylor == 3
 		simul(periods=100);				% 100 periods are simulated deterministically
 		rplot c;						% c y m z infl paths are printed
 		rplot y;

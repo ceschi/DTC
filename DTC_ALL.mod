@@ -208,7 +208,6 @@ end;
 		@#if flag_start == 0
 			initval;
 			s=1.00;
-			end;
 		@#endif
 
 		@#if flag_start == 1
@@ -225,8 +224,9 @@ end;
 			z = 	46.0421162119544;
 			m = 	47.0433677764099;
 			infl = 	0;
-			end;
 		@#endif
+
+			end;
 			endval;
 			s=1.05;
 			end;

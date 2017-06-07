@@ -151,12 +151,7 @@ theta = M_.params( 3 );
 % INITVAL instructions
 %
 options_.initval_file = 0;
-oo_.exo_steady_state( 4 ) = 1.05;
-oo_.steady_state( 5 ) = 1;
-oo_.steady_state( 2 ) = 1;
-oo_.steady_state( 1 ) = 46.0421162119544;
-oo_.steady_state( 3 ) = 47.0433677764099;
-oo_.steady_state( 4 ) = 0;
+oo_.exo_steady_state( 4 ) = 1.00;
 if M_.exo_nbr > 0;
 	oo_.exo_simul = [ones(M_.maximum_lag,1)*oo_.exo_steady_state'];
 end;
@@ -173,7 +168,7 @@ oo_.exo_steady_state( 4 ) = 1.05;
 % SHOCKS instructions
 %
 make_ex_;
-set_shocks(0,1:50, 4, repmat(1,50,1));
+set_shocks(0,0:50, 4, repmat(1,51,1));
 M_.exo_det_length = 0;
 options_.periods = 100;
 simul();

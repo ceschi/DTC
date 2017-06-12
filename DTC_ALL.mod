@@ -1,13 +1,13 @@
 % CALVO 2016 - NOMINAL ANCHORING WITH LIQUID MONETARY POLICY ASSETS
 %
 %
-% Discrete tiem version of the model augmented with
+% Discrete time version of the model augmented with
 % - explicit output gap
 % - implicitly defined money demand
 % - AR shocks 
 % - options for Taylor Rule
 % 
-% V0.4
+% V0.4.5
 
 @#define flag_taylor = 0
 % defines a macro-variable to select among 
@@ -185,7 +185,7 @@ end;
 %%% INITVAL BLOCK %%%
 % declare initial value for s and then implement
 % temporary shock at given period T and 
-% permanent shock thorugh endval block
+% permanent shock through endval block
 % To isolate effects of peg, all other shocks
 % ought to be shut off
 
@@ -311,6 +311,9 @@ end;
 		rplot m;
 		rplot z;
 		rplot infl;
+<<<<<<< HEAD
+	@#endif
+=======
 		dynasave (model_3_sims) y m c infl z;
 	@#endif
 
@@ -319,3 +322,4 @@ write_latex_parameter_table;
 write_latex_dynamic_model;
 collect_latex_files; 
 */
+>>>>>>> refs/remotes/origin/master

@@ -17,7 +17,7 @@
 %  - 2 for model with interest rate peg w\ temp shock
 %  - 3 for model with interest rate peg w\ perm shock
 
-@#define flag_start = 0
+@#define flag_start = 1
 % relevant only for flag_taylor = 3, it
 % stts some minor details of the 
 % deterministic simulations
@@ -94,7 +94,7 @@ alp =	0.33;
 % optional parameters
 @#if flag_taylor == 1
 	omega =  .75;
-	rho =	 .5;
+	rho =	 .1;
 @#endif
 
 chi = 	 .95;
@@ -208,7 +208,6 @@ end;
 		@#if flag_start == 0
 			initval;
 			s=1.00;
-			end;
 		@#endif
 
 		@#if flag_start == 1
@@ -225,8 +224,9 @@ end;
 			z = 	46.0421162119544;
 			m = 	47.0433677764099;
 			infl = 	0;
-			end;
 		@#endif
+
+			end;
 			endval;
 			s=1.05;
 			end;
@@ -278,6 +278,7 @@ end;
 					drop=10000,			% burn-in sample
 					replic=100			% number of series to compute IRFs
 					)  y m c infl z;
+		dynatype (model_0_sims) y m c infl z;
 	@#endif
 
 	@#if flag_taylor == 1
@@ -289,6 +290,7 @@ end;
 					drop=10000,			% burn-in sample
 					replic=100			% number of series to compute IRFs
 					)  y m c infl z;
+		dynasave (model_1_sims) y m c infl z;
 	@#endif
 
 %/* deterministic simulations */
@@ -299,6 +301,7 @@ end;
 		rplot m;
 		rplot z;
 		rplot infl;
+		dynasave (model_2_sims) y m c infl z;
 	@#endif
 
 	@#if flag_taylor == 3
@@ -308,4 +311,15 @@ end;
 		rplot m;
 		rplot z;
 		rplot infl;
+<<<<<<< HEAD
 	@#endif
+=======
+		dynasave (model_3_sims) y m c infl z;
+	@#endif
+
+/*
+write_latex_parameter_table;
+write_latex_dynamic_model;
+collect_latex_files; 
+*/
+>>>>>>> refs/remotes/origin/master

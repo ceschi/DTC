@@ -1,13 +1,13 @@
 % CALVO 2016 - NOMINAL ANCHORING WITH LIQUID MONETARY POLICY ASSETS
 %
 %
-% Discrete tiem version of the model augmented with
+% Discrete time version of the model augmented with
 % - explicit output gap
 % - implicitly defined money demand
 % - AR shocks 
 % - options for Taylor Rule
 % 
-% V0.4
+% V0.4.5
 
 @#define flag_taylor = 0
 % defines a macro-variable to select among 
@@ -17,7 +17,7 @@
 %  - 2 for model with interest rate peg w\ temp shock
 %  - 3 for model with interest rate peg w\ perm shock
 
-@#define flag_start = 1
+@#define flag_start = 0
 % relevant only for flag_taylor = 3, it
 % stts some minor details of the 
 % deterministic simulations
@@ -94,7 +94,7 @@ alp =	0.33;
 % optional parameters
 @#if flag_taylor == 1
 	omega =  .75;
-	rho =	 .1;
+	rho =	 .5;
 @#endif
 
 chi = 	 .95;
@@ -185,7 +185,7 @@ end;
 %%% INITVAL BLOCK %%%
 % declare initial value for s and then implement
 % temporary shock at given period T and 
-% permanent shock thorugh endval block
+% permanent shock through endval block
 % To isolate effects of peg, all other shocks
 % ought to be shut off
 
@@ -208,6 +208,7 @@ end;
 		@#if flag_start == 0
 			initval;
 			s=1.00;
+			end;
 		@#endif
 
 		@#if flag_start == 1
@@ -224,9 +225,8 @@ end;
 			z = 	46.0421162119544;
 			m = 	47.0433677764099;
 			infl = 	0;
-		@#endif
-
 			end;
+		@#endif
 			endval;
 			s=1.05;
 			end;
@@ -278,7 +278,6 @@ end;
 					drop=10000,			% burn-in sample
 					replic=100			% number of series to compute IRFs
 					)  y m c infl z;
-		dynatype (model_0_sims) y m c infl z;
 	@#endif
 
 	@#if flag_taylor == 1
@@ -290,7 +289,6 @@ end;
 					drop=10000,			% burn-in sample
 					replic=100			% number of series to compute IRFs
 					)  y m c infl z;
-		dynasave (model_1_sims) y m c infl z;
 	@#endif
 
 %/* deterministic simulations */
@@ -301,7 +299,6 @@ end;
 		rplot m;
 		rplot z;
 		rplot infl;
-		dynasave (model_2_sims) y m c infl z;
 	@#endif
 
 	@#if flag_taylor == 3
@@ -311,11 +308,4 @@ end;
 		rplot m;
 		rplot z;
 		rplot infl;
-		dynasave (model_3_sims) y m c infl z;
 	@#endif
-
-/*
-write_latex_parameter_table;
-write_latex_dynamic_model;
-collect_latex_files; 
-*/

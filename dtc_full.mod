@@ -64,6 +64,10 @@ varexo shock_e_ee	%${\nu^{EE}}$				(longname='EE AR shock')
 	@#endif
 ;
 
+/* % consider including varexo_det for models 2 & 3, check
+   % dynare guide for more information -- end of pg 11
+*/
+
 
 
 %%% DECLARING PARAMETER SET AND VALUES %%%
@@ -285,7 +289,7 @@ check(
 %/* stochastic simulations */
 	@#if flag_taylor == 0
 		stoch_simul(order=1,			% order of Taylor expansion
-					nocorr,				% do not output correlation matrix
+					%nocorr,				% do not output correlation matrix
 					solve_algo=2,		% nonlinear solver: 0=fsolve, matlab's own; 1=Dynare's own; 2=Dynare's own but block-recursive; 3=Sim's...
 					irf=30,				% periods to include in IRFs' plots
 					periods=50000,		% number of periods to use in the simulations
@@ -297,7 +301,7 @@ check(
 
 	@#if flag_taylor == 1
 		stoch_simul(order=1,			% order of Taylor expansion
-					nocorr,				% do not output correlation matrix
+					%nocorr,				% do not output correlation matrix
 					solve_algo=2,		% nonlinear solver: 0=fsolve, matlab's own; 1=Dynare's own; 2=Dynare's own but block-recursive; 3=Sim's...
 					irf=30,				% periods to include in IRFs' plots
 					periods=50000,		% number of periods to use in the simulations
@@ -334,5 +338,6 @@ check(
 /*
 write_latex_parameter_table;
 write_latex_dynamic_model;
+write_latex_static_model;
 collect_latex_files; 
 */

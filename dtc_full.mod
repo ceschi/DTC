@@ -9,6 +9,7 @@
 % 
 % V0.4.9
 
+
 @#define flag_taylor = 1
 % defines a macro-variable to select among 
 % different specification of the TR: 
@@ -341,3 +342,18 @@ write_latex_dynamic_model;
 write_latex_static_model;
 collect_latex_files; 
 */
+
+
+%%%%  Matlab commands  %%%%
+verbatim;
+min(m); % to verify whether m takes negative values
+min(z); % to verify whether z takes negative values
+nomin=i_rate(z, m, s, alp);
+r_int=nomin - infl;
+corr(nomin, infl);
+
+figure('Name', 'Nominal interest rate');
+plot(nomin((end-300):end));
+
+figure('Name', 'Real interest rate');
+plot(r_int((end-300):end));

@@ -350,7 +350,7 @@ min(m); % to verify whether m takes negative values
 min(z); % to verify whether z takes negative values
 nomin=i_rate(z, m, s, alp);
 r_int=nomin - infl;
-corr(nomin, infl);
+corr(nomin, infl)
 
 figure('Name', 'Nominal interest rate');
 plot(nomin((end-300):end));

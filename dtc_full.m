@@ -190,9 +190,15 @@ var_list_ = char(var_list_, 'c');
 var_list_ = char(var_list_, 'infl');
 var_list_ = char(var_list_, 'z');
 dynasave('model_1_sims',var_list_);
-spread=spread(z, m, s, alp);
-figure;
-plot(spread((end-250):end));
+min(m); % to verify whether m takes negative values
+min(z); % to verify whether z takes negative values
+nomin=i_rate(z, m, s, alp);
+r_int=nomin - infl;
+corr(nomin, infl)
+figure('Name', 'Nominal interest rate');
+plot(nomin((end-300):end));
+figure('Name', 'Real interest rate');
+plot(r_int((end-300):end));
 
 save('dtc_full_results.mat', 'oo_', 'M_', 'options_');
 if exist('estim_params_', 'var') == 1

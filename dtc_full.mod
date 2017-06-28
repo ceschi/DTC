@@ -341,13 +341,3 @@ write_latex_dynamic_model;
 write_latex_static_model;
 collect_latex_files; 
 */
-
-verbatim;
-nomin=i_rate(z, m, s, alp);
-figure;
-plot(nomin((end-300):end));
-min(nomin); 
-corr(nomin, infl);
-r_int = nomin - infl;
-figure;
-plot(r_int((end-300):end));

@@ -7,7 +7,7 @@
 % - AR shocks 
 % - options for Taylor Rule
 % 
-% V0.4.6
+% V0.4.9
 
 @#define flag_taylor = 1
 % defines a macro-variable to select among 

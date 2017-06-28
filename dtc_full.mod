@@ -9,7 +9,7 @@
 % 
 % V0.4.6
 
-@#define flag_taylor = 0
+@#define flag_taylor = 1
 % defines a macro-variable to select among 
 % different specification of the TR: 
 %  - 0 for standard model 
@@ -101,7 +101,7 @@ alp =	0.33;
 	rho =	 .5;
 @#endif
 
-chi = 	 .95;
+chi = 	 .995;
 ybar=	1;
 
 % persistence for AR shock processes
@@ -247,14 +247,14 @@ shocks;
 	@#if flag_taylor == 0
 		var shock_e_ee; 		  stderr .1;
 		var shock_e_pc; 		  stderr .1;
-		var e_out;    	 		  stderr .01;
+		var e_out;    	 		  stderr .001;
 	@#endif
 
 	@#if flag_taylor == 1
-		var shock_e_ee; 		  stderr .1;
+		var shock_e_ee; 		  stderr .01;
 		var shock_e_pc; 		  stderr .1;
-		var e_out;    	 		  stderr .01;
-		var shock_pol; 		  	  stderr .1;
+		var e_out;    	 		  stderr .001;
+		var shock_pol; 		  	  stderr .01;
 	@#endif
 
 	@#if flag_taylor == 2

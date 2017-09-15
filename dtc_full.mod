@@ -128,7 +128,14 @@ z(+1)=z/(1+infl(+1));
 c^(-eta)=c(+1)^(-eta)*bet*((alp*m^(alp-1))/(bet*c(+1)^(-eta)) + 1/(1+infl(+1))) + e_ee;
 % Euler equation for consumption -- with shock
 
-infl=sigm*infl(+1) + mu*(c-y) + e_pc;
+
+infl=bet*infl(+1) + mu*(c-y) + e_pc;
+/*
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% there might be a mistake in setting sigma: it is supposed to be beta in regular model!!! 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
+//%infl=sigm*infl(+1) + mu*(c-y) + e_pc;//
 % Phillips curve / inflation evolution -- with shock
 
 1/(z-m) - alp*m^(alp-1) = -(bet * c(+1)^(-eta) * s)/(1+infl(+1));

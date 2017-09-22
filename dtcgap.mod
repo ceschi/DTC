@@ -1,7 +1,4 @@
-% CALVO 2016 - NOMINAL ANCHORING WITH LIQUID MONETARY POLICY ASSETS
-%
-%
-% Code for NKPC with explicit link with TFP shock 
+% Code for NKPC with TFP shock 
 % 
 % Specific sticky prices, monopolistic competition, and liquidity
 %
@@ -32,11 +29,11 @@ bet = .9975;			//discount
 theta= 1;				//policy!!!
 alphC=3/4;				// Calvo updating
 alph = 2/3;				//returns toscale money
-rho_tfp=.85;			//shock persistence
+rho_tfp=.5;			//shock persistence
 epse= 6;				//elasticity of substi
 xi=1;					//fisch elasticity
 zet=.6;					//returns toscale production
-tfpbar=1;
+tfpbar=5;
 
 
 
@@ -46,28 +43,40 @@ model;
 #flex=(xi+1)/(1+xi+zet*(eta-1));
 
 z(+1)=z/(1+infl(+1));
+% liquidity ev.
 
-y^(-eta)=y(+1)^(-eta)*bet*((m^(alph-1))/(bet*y(+1)^(-eta)) + 1/(1+infl(+1))) + e_ee;
+y^(-eta)=m^(alph-1) + y(+1)^(-eta)*bet/(1+infl(+1)) + e_ee;
+% euler eq / is curve
 
 1/(z-m) - m^(alph-1) = -(bet * y(+1)^(-eta) * s)/(1+infl(+1));
+% mon demand - implicit
 
-exp(infl)=exp(bet*infl(+1) + kappa*(y - flex*tfp)); // + e_pc;
-/* this equation needs fixing possibly */
+infl=bet*infl(+1) + kappa*(exp(y) - exp(flex*tfp))+ e_pc;
+% Phillips curve loglin'd
 
 s=theta*infl(+1);
+% policy 
 
-log(tfp)=(1-rho_tfp)*log(tfpbar) + rho_tfp*log(tfp(-1)) + e_tfp;
+tfp=(1-rho_tfp)*tfpbar + rho_tfp*tfp(-1) + e_tfp;
 
 end;
 
 
 
 steady_state_model;
+
 infl=0;
-s=infl;
-y=tfpbar;
+tfp=tfpbar;
+s=theta*infl;
+
+y=tfp^((xi+1)/(1+xi+zet*(eta-1)));
+/*
 m=((y^(-eta))/(1-bet))^(1/(1-alph));
 z=m + 1/(m^(alph-1) - bet*s*y^(-eta));
+*/
+m=((y^eta)/(1-bet))^(1/(1-alph));
+z=(1+m^alph)*m^(1-alph);
+
 
 end;
 

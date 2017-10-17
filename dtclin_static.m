@@ -25,7 +25,7 @@ function [residual, g1, g2, g3] = dtclin_static(y, x, params)
 % Warning : this file is generated automatically by Dynare
 %           from model file (.mod)
 
-residual = zeros( 7, 1);
+residual = zeros( 8, 1);
 
 %
 % Model equations
@@ -35,15 +35,16 @@ kappa__ = (1-params(6))*(1-params(6)*params(2))*params(8)/(params(6)*(params(8)+
 flex__ = (1+params(7))/(1+params(7)+params(8)*(params(1)-1));
 mbar__ = (flex__^params(1)/(1-params(2)))^(1/(1-params(4)));
 dbar__ = mbar__^((params(4)-params(11))/(1-params(11)));
-T61 = (1-params(4))/mbar__^2;
-T67 = params(2)*flex__^(-params(1))*mbar__^(1-params(4));
+zbar__ = mbar__+mbar__^((1-params(4))/(1-params(11)));
+T64 = (1-params(4))/mbar__^2;
+T70 = params(2)*flex__^(-params(1))*mbar__^(1-params(4));
 lhs =y(1);
 rhs =y(1)-y(4);
 residual(1)= lhs-rhs;
 lhs =y(2);
 rhs =y(2)+(1-params(4))/params(1)*y(3)+y(4)*1/params(1)+x(1);
 residual(2)= lhs-rhs;
-residual(3) = y(3)*T61+T67*y(5)-(1-params(11))*(y(1)+dbar__*(y(1)-y(3)));
+residual(3) = y(3)*T64+T70*y(5)-(1-params(11))*(y(1)+dbar__*(y(1)-y(3)));
 lhs =y(4);
 rhs =params(2)*y(4)+kappa__*(y(2)-flex__*y(6))+x(2);
 residual(4)= lhs-rhs;
@@ -56,11 +57,14 @@ residual(6)= lhs-rhs;
 lhs =y(7);
 rhs =y(7)*params(12)+x(4);
 residual(7)= lhs-rhs;
+lhs =y(8);
+rhs =y(1)*zbar__/(zbar__-mbar__)-y(3)*mbar__/(zbar__-mbar__);
+residual(8)= lhs-rhs;
 if ~isreal(residual)
   residual = real(residual)+imag(residual).^2;
 end
 if nargout >= 2,
-  g1 = zeros(7, 7);
+  g1 = zeros(8, 8);
 
   %
   % Jacobian matrix
@@ -70,8 +74,8 @@ if nargout >= 2,
   g1(2,3)=(-((1-params(4))/params(1)));
   g1(2,4)=(-(1/params(1)));
   g1(3,1)=(-((1-params(11))*(1+dbar__)));
-  g1(3,3)=T61-(1-params(11))*(-dbar__);
-  g1(3,5)=T67;
+  g1(3,3)=T64-(1-params(11))*(-dbar__);
+  g1(3,5)=T70;
   g1(4,2)=(-kappa__);
   g1(4,4)=1-params(2);
   g1(4,6)=(-(kappa__*(-flex__)));
@@ -80,6 +84,9 @@ if nargout >= 2,
   g1(5,7)=(-1);
   g1(6,6)=1-params(9);
   g1(7,7)=1-params(12);
+  g1(8,1)=(-(zbar__/(zbar__-mbar__)));
+  g1(8,3)=mbar__/(zbar__-mbar__);
+  g1(8,8)=1;
   if ~isreal(g1)
     g1 = real(g1)+2*imag(g1);
   end
@@ -88,13 +95,13 @@ if nargout >= 3,
   % Hessian matrix
   %
 
-  g2 = sparse([],[],[],7,49);
+  g2 = sparse([],[],[],8,64);
 if nargout >= 4,
   %
   % Third order derivatives
   %
 
-  g3 = sparse([],[],[],7,343);
+  g3 = sparse([],[],[],8,512);
 end
 end
 end

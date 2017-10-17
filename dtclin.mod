@@ -6,7 +6,7 @@
 % V0.5
 
 
-var z y m infl s tfp e_mp;
+var z y m infl s tfp e_mp b;
 
 predetermined_variables z;
 
@@ -27,10 +27,10 @@ parameters	eta
 ;
 
 eta = 1.39;				//riskaversion
-bet = .9975;			//discount
+bet = .975;			//discount
 theta= .8;				//POLICY!!!
 alphC=3/4;				// Calvo updating
-alph = 5/6;				//returns toscale money
+alph = 3/4;				//returns toscale money
 rho_tfp=.5;			//shock persistence
 epse= 6;				//elasticity of substi
 xi=1;					//fisch elasticity
@@ -47,6 +47,7 @@ model(linear);
 #flex=(xi+1)/(1+xi+zet*(eta-1));
 #mbar= ((flex^eta)/(1-bet))^(1/(1-alph));
 #dbar= mbar^((alph-gammma)/(1-gammma));
+#zbar=mbar + mbar^((1-alph)/(1-gammma));
 
 z(+1) = z - infl(+1);
 % liquidity ev.
@@ -67,6 +68,8 @@ tfp=(1-rho_tfp)*tfpbar + rho_tfp*tfp(-1) + e_tfp;
 
 e_mp=rho_mp*e_mp(-1) + e_e_mp;
 
+b = (zbar/(zbar-mbar))*z - (mbar/(zbar-mbar))*m;
+
 end;
 
 
@@ -82,4 +85,17 @@ end;
 
 check;
 
-stoch_simul(order=1, solve_algo=2, irf=30, periods=50000, drop=10000, replic=100) y m infl z;
+stoch_simul(order=1, solve_algo=2, irf=30, periods=500000, drop=100000, replic=100) y m infl z b;
+
+
+/* COMMENTS
+- the magnitude of m and z coefficients is disproportionate
+  it is sufficient to introduce b to appreciate this effect
+
+- should revise thoroughly the loglinearisation part to check whether some
+   parameter is ill-placed
+
+- code should get more elegant and complete, wrt dtc_full.mod
+
+
+*/

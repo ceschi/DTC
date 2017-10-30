@@ -88,14 +88,30 @@ check;
 stoch_simul(order=1, solve_algo=2, irf=30, periods=500000, drop=100000, replic=100) y m infl z b;
 
 
-/* COMMENTS
-- the magnitude of m and z coefficients is disproportionate
-  it is sufficient to introduce b to appreciate this effect
+%%%%  Matlab commands  %%%%
+verbatim;
+min(m); % to verify whether m takes negative values
+min(z); % to verify whether z takes negative values
+nomin=i_rate(z, m, s, alph);
+r_int=nomin - infl;
+corr(nomin, infl)
 
-- should revise thoroughly the loglinearisation part to check whether some
-   parameter is ill-placed
+figure('Name', 'Nominal interest rate');
+plot(nomin((end-300):end));
 
-- code should get more elegant and complete, wrt dtc_full.mod
+figure('Name', 'Real interest rate');
+plot(r_int((end-300):end));
 
 
-*/
+%/* COMMENTS
+%- the magnitude of m and z coefficients is disproportionate
+%  it is sufficient to introduce b to appreciate this effect
+
+%- should revise thoroughly the loglinearisation part to check whether some
+%   parameter is ill-placed
+
+%- code should get more elegant and complete, wrt dtc_full.mod
+
+
+%*/
+

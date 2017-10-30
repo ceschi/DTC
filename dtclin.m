@@ -195,6 +195,23 @@ options_.replic = 100;
 options_.solve_algo = 2;
 var_list_ = char('y','m','infl','z','b');
 info = stoch_simul(var_list_);
+min(m); % to verify whether m takes negative values
+min(z); % to verify whether z takes negative values
+nomin=i_rate(z, m, s, alph);
+r_int=nomin - infl;
+corr(nomin, infl)
+figure('Name', 'Nominal interest rate');
+plot(nomin((end-300):end));
+figure('Name', 'Real interest rate');
+plot(r_int((end-300):end));
+%/* COMMENTS
+%- the magnitude of m and z coefficients is disproportionate
+%  it is sufficient to introduce b to appreciate this effect
+%- should revise thoroughly the loglinearisation part to check whether some
+%   parameter is ill-placed
+%- code should get more elegant and complete, wrt dtc_full.mod
+%*/
+
 save('dtclin_results.mat', 'oo_', 'M_', 'options_');
 if exist('estim_params_', 'var') == 1
   save('dtclin_results.mat', 'estim_params_', '-append');

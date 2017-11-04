@@ -154,15 +154,15 @@ M_.maximum_exo_lead = 0;
 oo_.exo_steady_state = zeros(4, 1);
 M_.params = NaN(12, 1);
 M_.NNZDerivatives = [28; -1; -1];
-M_.params( 1 ) = 1.39;
+M_.params( 1 ) = 5;
 eta = M_.params( 1 );
 M_.params( 2 ) = .975;
 bet = M_.params( 2 );
-M_.params( 3 ) = .8;
+M_.params( 3 ) = 1.8;
 theta = M_.params( 3 );
 M_.params( 6 ) = 0.75;
 alphC = M_.params( 6 );
-M_.params( 4 ) = 0.75;
+M_.params( 4 ) = .05;
 alph = M_.params( 4 );
 M_.params( 9 ) = .5;
 rho_tfp = M_.params( 9 );
@@ -174,9 +174,9 @@ M_.params( 8 ) = .6;
 zet = M_.params( 8 );
 M_.params( 10 ) = 1;
 tfpbar = M_.params( 10 );
-M_.params( 11 ) = 0.6666666666666666;
+M_.params( 11 ) = .02;
 gammma = M_.params( 11 );
-M_.params( 12 ) = .75;
+M_.params( 12 ) = .65;
 rho_mp = M_.params( 12 );
 %
 % SHOCKS instructions
@@ -197,7 +197,7 @@ var_list_ = char('y','m','infl','z','b');
 info = stoch_simul(var_list_);
 min(m); % to verify whether m takes negative values
 min(z); % to verify whether z takes negative values
-nomin=i_rate(z, m, s, alph);
+nomin=i_rate(z, m, s, alph, gammma);
 r_int=nomin - infl;
 corr(nomin, infl)
 figure('Name', 'Nominal interest rate');

@@ -26,18 +26,18 @@ parameters	eta
 			rho_mp
 ;
 
-eta = 1.39;				//riskaversion
+eta = 5;				//riskaversion
 bet = .975;			//discount
-theta= .8;				//POLICY!!!
+theta= 1.8;				//POLICY!!!
 alphC=3/4;				// Calvo updating
-alph = 3/4;				//returns toscale money
+alph = .05;				//returns toscale money
 rho_tfp=.5;			//shock persistence
 epse= 6;				//elasticity of substi
 xi=1;					//fisch elasticity
 zet=.6;					//returns toscale production
 tfpbar=1;
-gammma=2/3;				//returns toscale bonds
-rho_mp=.75;				// persistence of monpol shocks
+gammma=.02;				//returns toscale bonds
+rho_mp=.65;				// persistence of monpol shocks
 
 
 
@@ -92,7 +92,7 @@ stoch_simul(order=1, solve_algo=2, irf=30, periods=500000, drop=100000, replic=1
 verbatim;
 min(m); % to verify whether m takes negative values
 min(z); % to verify whether z takes negative values
-nomin=i_rate(z, m, s, alph);
+nomin=i_rate(z, m, s, alph, gammma);
 r_int=nomin - infl;
 corr(nomin, infl)
 

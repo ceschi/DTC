@@ -7,13 +7,11 @@
 
 %%%% Flags for conditional vars %%%%
 
-@#define flag_taylor = 1
+@#define calibras = 1
 % defines a macro-variable to select among 
 % different specification of the TR: 
-%  - 0 for standard model 
-%  - 1 for model with output gap in the TR
-%  - 2 for model with interest rate peg w\ temp shock
-%  - 3 for model with interest rate peg w\ perm shock
+%  - 0 for standard model with TP
+%  - 1 for model violating TP
 
 
 %%%%% Variables declaration %%%%%
@@ -74,7 +72,8 @@ rho_tfp = .5;
 % part to outsource in other files
 
 % Mon Pol reaction
-theta = 1.8;
+	theta = 1.8;
+
 % exp on bonds, must be lower than money!
 gammma = .02;
 % exp on money
@@ -173,4 +172,10 @@ plot(r_int((end-300):end));
 %   parameter is ill-placed
 
 %- code should get more elegant and complete, wrt dtc_full.mod
+
+   @#if strict_targeting == 1
+        @# include "strict_targeting_parameters.mod"
+    @#else
+        @# include "flexible_targeting_parameters.mod"
+    @#endif
 */

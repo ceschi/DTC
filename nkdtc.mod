@@ -7,7 +7,7 @@
 
 %%%% Flags for conditional vars %%%%
 
-@#define calibras = 1
+@#define calibras = 0
 % defines a macro-variable to select among 
 % different specification of the TR: 
 %  - 0 for standard model with TP
@@ -72,7 +72,14 @@ rho_tfp = .5;
 % part to outsource in other files
 
 % Mon Pol reaction
-	theta = 1.8;
+
+@#if calibras == 0
+	@# include "usual_tp.mod"
+@#endif
+
+@#if calibras == 1
+	@# include "passive_tp.mod"
+@#endif
 
 % exp on bonds, must be lower than money!
 gammma = .02;
@@ -172,10 +179,3 @@ plot(r_int((end-300):end));
 %   parameter is ill-placed
 
 %- code should get more elegant and complete, wrt dtc_full.mod
-
-   @#if strict_targeting == 1
-        @# include "strict_targeting_parameters.mod"
-    @#else
-        @# include "flexible_targeting_parameters.mod"
-    @#endif
-*/

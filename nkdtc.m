@@ -158,7 +158,7 @@ M_.params( 1 ) = 5;
 eta = M_.params( 1 );
 M_.params( 2 ) = .975;
 bet = M_.params( 2 );
-M_.params( 5 ) = 6;
+M_.params( 5 ) = 1;
 epse = M_.params( 5 );
 M_.params( 6 ) = .75;
 alphC = M_.params( 6 );
@@ -176,7 +176,7 @@ M_.params( 3 ) = 1.8;
 theta = M_.params( 3 );
 M_.params( 11 ) = .02;
 gammma = M_.params( 11 );
-M_.params( 4 ) = .05;
+M_.params( 4 ) = .65;
 alph = M_.params( 4 );
 %
 % SHOCKS instructions

@@ -50,7 +50,7 @@ eta = 5;
 % Discount factor
 bet = .975;
 % intratemporal elasticity of subs
-epse = 6;
+epse = 6; % other values in lit: 3.8 (bilbiie&Ghiro); 5 (Eusepi)
 % calvo price updating
 alphC = .75;
 % SS tfp
@@ -69,7 +69,6 @@ rho_mp = .65;
 rho_tfp = .5;
 
 %%%% fine tuning parameters
-% part to outsource in other files
 
 % Mon Pol reaction
 
@@ -84,7 +83,7 @@ rho_tfp = .5;
 % exp on bonds, must be lower than money!
 gammma = .02;
 % exp on money
-alph = .05;
+alph = .65;
 
 
 %%%%% Linearised Model Declaration %%%%%

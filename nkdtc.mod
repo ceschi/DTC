@@ -50,11 +50,11 @@ eta = 5;
 % Discount factor
 bet = .975;
 % intratemporal elasticity of subs
-epse = 6; % other values in lit: 3.8 (bilbiie&Ghiro); 5 (Eusepi)
+epse = 3.8; % other values in lit: 3.8 (bilbiie&Ghiro); 5 (Eusepi); 6 previous cal
 % calvo price updating
 alphC = .75;
 % SS tfp
-tfpbar = 1;
+tfpbar = 0;
 % returns to scale in goods production
 zet = .6;
 % Frisch elasticity
@@ -66,7 +66,7 @@ xi = 1;
 % Mon Pol shocks persistence
 rho_mp = .65;
 % TFP persistence
-rho_tfp = .5;
+rho_tfp = .65;
 
 %%%% fine tuning parameters
 
@@ -135,7 +135,7 @@ var e_ee; 	stderr .000;
 var e_pc; 	stderr .000;
 
 % TFP shock
-var e_tfp;	stderr 1;
+var e_tfp;	stderr 1; % for non-standard-size shock
 
 % Mon Pol shock, 1% shock annualised (model in quarters)
 var e_e_mp; 	stderr 0.25^2;
@@ -154,20 +154,26 @@ stoch_simul(order=1, 		% approx order
 			y m infl z b;   % vars to plot
 
 
-/*
+% verbatim;
+% % Scatterplot for Phillips Curve
+% figure('Name', 'y-gap vs inflation');
+% scatter(y-((xi+1)/(1+xi+zet*(eta-1)))*tfp, infl);
+% print('scatter', '-depsc');
+
+
 %%%%  Matlab commands  %%%%
-verbatim;
-min(m); % to verify whether m takes negative values
-min(z); % to verify whether z takes negative values
-nomin=i_rate(z, m, s, alph, gammma);
-r_int=nomin - infl;
-corr(nomin, infl)
+% verbatim;
+% min(m); % to verify whether m takes negative values
+% min(z); % to verify whether z takes negative values
+% nomin=i_rate(z, m, s, alph, gammma);
+% r_int=nomin - infl;
+% corr(nomin, infl)
 
-figure('Name', 'Nominal interest rate');
-plot(nomin((end-300):end));
+% figure('Name', 'Nominal interest rate');
+% plot(nomin((end-300):end));
 
-figure('Name', 'Real interest rate');
-plot(r_int((end-300):end));
+% figure('Name', 'Real interest rate');
+% plot(r_int((end-300):end));
 
 
 %/* COMMENTS

@@ -154,10 +154,10 @@ stoch_simul(order=1, 		% approx order
 			y m infl z b;   % vars to plot
 
 
-% verbatim;
-% % Scatterplot for Phillips Curve
-% figure('Name', 'y-gap vs inflation');
-% scatter(y-((xi+1)/(1+xi+zet*(eta-1)))*tfp, infl);
+verbatim;
+% Scatterplot for Phillips Curve
+figure('Name', 'y-gap vs inflation');
+scatter(y-((xi+1)/(1+xi+zet*(eta-1)))*tfp, infl);
 % print('scatter', '-depsc');
 
 

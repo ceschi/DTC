@@ -195,6 +195,28 @@ options_.replic = 250;
 options_.solve_algo = 2;
 var_list_ = char('y','m','infl','z','b');
 info = stoch_simul(var_list_);
+% Scatterplot for Phillips Curve
+figure('Name', 'y-gap vs inflation');
+scatter(y-((xi+1)/(1+xi+zet*(eta-1)))*tfp, infl);
+% print('scatter', '-depsc');
+%%%%  Matlab commands  %%%%
+% verbatim;
+% min(m); % to verify whether m takes negative values
+% min(z); % to verify whether z takes negative values
+% nomin=i_rate(z, m, s, alph, gammma);
+% r_int=nomin - infl;
+% corr(nomin, infl)
+% figure('Name', 'Nominal interest rate');
+% plot(nomin((end-300):end));
+% figure('Name', 'Real interest rate');
+% plot(r_int((end-300):end));
+%/* COMMENTS
+%- the magnitude of m and z coefficients is disproportionate
+%  it is sufficient to introduce b to appreciate this effect
+%- should revise thoroughly the loglinearisation part to check whether some
+%   parameter is ill-placed
+%- code should get more elegant and complete, wrt dtc_full.mod
+
 save('nkdtc_results.mat', 'oo_', 'M_', 'options_');
 if exist('estim_params_', 'var') == 1
   save('nkdtc_results.mat', 'estim_params_', '-append');

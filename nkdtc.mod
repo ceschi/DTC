@@ -17,7 +17,7 @@
 %%%%% Variables declaration %%%%%
 
 % full set of vars
-var z y m infl s tfp e_mp b;
+var z y m pi s tfp e_mp b;
 
 % declaring state variables
 predetermined_variables z;
@@ -98,10 +98,10 @@ model(linear);
 #zbar=mbar + mbar^((1-alph)/(1-gammma));
 
 % real liquidity evolution
-z(+1) = z - infl(+1);
+z(+1) = z - pi(+1);
 
 % euler eq / is curve
-y = ((1-alph)/eta)*m + y(+1) +(1/eta)*infl(+1)+ e_ee;
+y = ((1-alph)/eta)*m + y(+1) +(1/eta)*pi(+1)+ e_ee;
 
 % mon demand - implicit
 ((1-alph)/mbar^2)*m + (bet*(flex^(-eta))*mbar^(1-alph))*s - (1-gammma)*(z + (z-m)*dbar)=0;
@@ -110,16 +110,19 @@ y = ((1-alph)/eta)*m + y(+1) +(1/eta)*infl(+1)+ e_ee;
 b = (zbar/(zbar-mbar))*z - (mbar/(zbar-mbar))*m;
 
 % Phillips curve loglin'd
-infl=bet*infl(+1) + kappa*(y - flex*tfp)+ e_pc;
+pi=bet*pi(+1) + kappa*(y - flex*tfp)+ e_pc;
 
 % Monetary policy rule
-s=theta*infl(+1) + e_mp;
+s=theta*pi(+1) + e_mp;
 
 % AR for technology
 tfp=(1-rho_tfp)*tfpbar + rho_tfp*tfp(-1) + e_tfp;
 
 % AR for Mon Pol shocks
 e_mp=rho_mp*e_mp(-1) + e_e_mp;
+
+% ygap
+y_gap=(y - flex*tfp);
 
 end;
 
@@ -151,14 +154,14 @@ stoch_simul(order=1, 		% approx order
 			periods=500000, % iterations to simulate
 			drop=100000, 	% burn-in drop			
 			replic=250)		% IRF iterations
-			y m infl z b;   % vars to plot
+			y_gap pi s m z;   % vars to plot
 
 
-verbatim;
-% Scatterplot for Phillips Curve
-figure('Name', 'y-gap vs inflation');
-scatter(y-((xi+1)/(1+xi+zet*(eta-1)))*tfp, infl);
-% print('scatter', '-depsc');
+% verbatim;
+% % Scatterplot for Phillips Curve
+% figure('Name', 'y-gap vs inflation');
+% scatter(y-((xi+1)/(1+xi+zet*(eta-1)))*tfp, pi);
+% % print('scatter', '-depsc');
 
 
 %%%%  Matlab commands  %%%%
@@ -166,8 +169,8 @@ scatter(y-((xi+1)/(1+xi+zet*(eta-1)))*tfp, infl);
 % min(m); % to verify whether m takes negative values
 % min(z); % to verify whether z takes negative values
 % nomin=i_rate(z, m, s, alph, gammma);
-% r_int=nomin - infl;
-% corr(nomin, infl)
+% r_int=nomin - pi;
+% corr(nomin, pi)
 
 % figure('Name', 'Nominal interest rate');
 % plot(nomin((end-300):end));

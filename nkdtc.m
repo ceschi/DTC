@@ -26,7 +26,7 @@ options_.dynare_version = '4.5.1';
 %
 global_initialization;
 diary off;
-diary('nkdtc.log');
+options_.nograph = 1;
 M_.exo_names = 'e_ee';
 M_.exo_names_tex = 'e\_ee';
 M_.exo_names_long = 'e_ee';
@@ -39,6 +39,9 @@ M_.exo_names_long = char(M_.exo_names_long, 'e_tfp');
 M_.exo_names = char(M_.exo_names, 'e_e_mp');
 M_.exo_names_tex = char(M_.exo_names_tex, 'e\_e\_mp');
 M_.exo_names_long = char(M_.exo_names_long, 'e_e_mp');
+M_.exo_names = char(M_.exo_names, 'e_z');
+M_.exo_names_tex = char(M_.exo_names_tex, 'e\_z');
+M_.exo_names_long = char(M_.exo_names_long, 'e_z');
 M_.endo_names = 'z';
 M_.endo_names_tex = 'z';
 M_.endo_names_long = 'z';
@@ -48,9 +51,9 @@ M_.endo_names_long = char(M_.endo_names_long, 'y');
 M_.endo_names = char(M_.endo_names, 'm');
 M_.endo_names_tex = char(M_.endo_names_tex, 'm');
 M_.endo_names_long = char(M_.endo_names_long, 'm');
-M_.endo_names = char(M_.endo_names, 'infl');
-M_.endo_names_tex = char(M_.endo_names_tex, 'infl');
-M_.endo_names_long = char(M_.endo_names_long, 'infl');
+M_.endo_names = char(M_.endo_names, 'pi');
+M_.endo_names_tex = char(M_.endo_names_tex, 'pi');
+M_.endo_names_long = char(M_.endo_names_long, 'pi');
 M_.endo_names = char(M_.endo_names, 's');
 M_.endo_names_tex = char(M_.endo_names_tex, 's');
 M_.endo_names_long = char(M_.endo_names_long, 's');
@@ -63,6 +66,9 @@ M_.endo_names_long = char(M_.endo_names_long, 'e_mp');
 M_.endo_names = char(M_.endo_names, 'b');
 M_.endo_names_tex = char(M_.endo_names_tex, 'b');
 M_.endo_names_long = char(M_.endo_names_long, 'b');
+M_.endo_names = char(M_.endo_names, 'y_gap');
+M_.endo_names_tex = char(M_.endo_names_tex, 'y\_gap');
+M_.endo_names_long = char(M_.endo_names_long, 'y_gap');
 M_.endo_partitions = struct();
 M_.param_names = 'eta';
 M_.param_names_tex = 'eta';
@@ -102,14 +108,14 @@ M_.param_names_tex = char(M_.param_names_tex, 'rho\_mp');
 M_.param_names_long = char(M_.param_names_long, 'rho_mp');
 M_.param_partitions = struct();
 M_.exo_det_nbr = 0;
-M_.exo_nbr = 4;
-M_.endo_nbr = 8;
+M_.exo_nbr = 5;
+M_.endo_nbr = 9;
 M_.param_nbr = 12;
-M_.orig_endo_nbr = 8;
+M_.orig_endo_nbr = 9;
 M_.aux_vars = [];
 M_.predetermined_variables = [ 1 ];
-M_.Sigma_e = zeros(4, 4);
-M_.Correlation_matrix = eye(4, 4);
+M_.Sigma_e = zeros(5, 5);
+M_.Correlation_matrix = eye(5, 5);
 M_.H = 0;
 M_.Correlation_matrix_ME = 1;
 M_.sigma_e_is_diagonal = 1;
@@ -121,19 +127,20 @@ options_.use_dll=0;
 M_.hessian_eq_zero = 1;
 erase_compiled_function('nkdtc_static');
 erase_compiled_function('nkdtc_dynamic');
-M_.orig_eq_nbr = 8;
-M_.eq_nbr = 8;
+M_.orig_eq_nbr = 9;
+M_.eq_nbr = 9;
 M_.ramsey_eq_nbr = 0;
 M_.lead_lag_incidence = [
  1 4 0;
- 0 5 12;
+ 0 5 13;
  0 6 0;
- 0 7 13;
+ 0 7 14;
  0 8 0;
  2 9 0;
  3 10 0;
- 0 11 0;]';
-M_.nstatic = 3;
+ 0 11 0;
+ 0 12 0;]';
+M_.nstatic = 4;
 M_.nfwrd   = 2;
 M_.npred   = 3;
 M_.nboth   = 0;
@@ -143,17 +150,19 @@ M_.ndynamic   = 5;
 M_.equations_tags = {
 };
 M_.static_and_dynamic_models_differ = 0;
-M_.exo_names_orig_ord = [1:4];
+M_.exo_names_orig_ord = [1:5];
 M_.maximum_lag = 1;
 M_.maximum_lead = 1;
 M_.maximum_endo_lag = 1;
 M_.maximum_endo_lead = 1;
-oo_.steady_state = zeros(8, 1);
+oo_.steady_state = zeros(9, 1);
 M_.maximum_exo_lag = 0;
 M_.maximum_exo_lead = 0;
-oo_.exo_steady_state = zeros(4, 1);
+oo_.exo_steady_state = zeros(5, 1);
 M_.params = NaN(12, 1);
-M_.NNZDerivatives = [28; -1; -1];
+M_.NNZDerivatives = [32; -1; -1];
+display('Model complying with Taylor Principle.')
+set_dynare_seed(240588);
 M_.params( 1 ) = 5;
 eta = M_.params( 1 );
 M_.params( 2 ) = .975;
@@ -186,37 +195,68 @@ M_.Sigma_e(1, 1) = (.000)^2;
 M_.Sigma_e(2, 2) = (.000)^2;
 M_.Sigma_e(3, 3) = (1)^2;
 M_.Sigma_e(4, 4) = (0.0625)^2;
+M_.Sigma_e(5, 5) = (0)^2;
 oo_.dr.eigval = check(M_,options_,oo_);
 options_.drop = 100000;
 options_.irf = 30;
 options_.order = 1;
 options_.periods = 500000;
-options_.replic = 250;
+options_.replic = 2500;
 options_.solve_algo = 2;
-var_list_ = char('y','m','infl','z','b');
+var_list_ = char('y_gap','pi','s','m','z','b');
 info = stoch_simul(var_list_);
-% Scatterplot for Phillips Curve
-figure('Name', 'y-gap vs inflation');
-scatter(y-((xi+1)/(1+xi+zet*(eta-1)))*tfp, infl);
-% print('scatter', '-depsc');
-%%%%  Matlab commands  %%%%
-% verbatim;
-% min(m); % to verify whether m takes negative values
-% min(z); % to verify whether z takes negative values
-% nomin=i_rate(z, m, s, alph, gammma);
-% r_int=nomin - infl;
-% corr(nomin, infl)
-% figure('Name', 'Nominal interest rate');
-% plot(nomin((end-300):end));
-% figure('Name', 'Real interest rate');
-% plot(r_int((end-300):end));
-%/* COMMENTS
-%- the magnitude of m and z coefficients is disproportionate
-%  it is sufficient to introduce b to appreciate this effect
-%- should revise thoroughly the loglinearisation part to check whether some
-%   parameter is ill-placed
-%- code should get more elegant and complete, wrt dtc_full.mod
-
+save('nkdtc_pi_tp.mat', 'pi', '-v6');
+len=options_.irf;
+irf_tfp = figure('Name', 'TFP shock', 'visible', 'off');
+subplot(3,1,1);
+plot(oo_.irfs.y_gap_e_tfp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.6 .1]);
+ylabel('Output gap');
+hold off;
+subplot(3,1,2);
+plot(oo_.irfs.pi_e_tfp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.25 .05]);
+ylabel('Inflation');
+hold off;
+subplot(3,1,3);
+plot(oo_.irfs.s_e_tfp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.25 .05]);
+ylabel('Interest rate');
+hold off;
+irf_mon = figure('Name', 'Monetary policy shock', 'visible', 'off');
+subplot(3,1,1);
+plot(oo_.irfs.y_gap_e_e_mp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.2 .005]);
+ylabel('Output gap');
+hold off;
+subplot(3,1,2);
+plot(oo_.irfs.pi_e_e_mp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.12 .005]);
+ylabel('Inflation');
+hold off;
+subplot(3,1,3);
+plot(oo_.irfs.s_e_e_mp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf 0 .15]);
+ylabel('Interest rate');
+hold off;
+print(irf_tfp, 'nkdtc_tp_tfp', '-dpdf', '-fillpage');
+print(irf_mon, 'nkdtc_tp_mp', '-dpdf', '-fillpage');
+clear len;
+clear irf_tfp;
+clear irf_mon;
+save('nkdtc_pi_tp.mat', 'pi', '-v6');
 save('nkdtc_results.mat', 'oo_', 'M_', 'options_');
 if exist('estim_params_', 'var') == 1
   save('nkdtc_results.mat', 'estim_params_', '-append');
@@ -242,4 +282,3 @@ disp(['Total computing time : ' dynsec2hms(toc(tic0)) ]);
 if ~isempty(lastwarn)
   disp('Note: warning(s) encountered in MATLAB/Octave code')
 end
-diary off

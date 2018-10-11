@@ -1,5 +1,5 @@
 # Liquidity DSGE
-A basic New Keynesian DSGE model augmented with liquidity features. This version is superseded. 
+A basic New Keynesian DSGE model augmented with liquidity features. This version is superseded. New comprehensive repo coming soon.
 
 
 

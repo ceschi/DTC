@@ -6,7 +6,7 @@ This repo contains the Dynare files to simulate a NEw Keynesian DSGE model augme
 
 1. `nkdtc.mod` contains the model equations and embeds several specifications. It requires `Dynare` and needs two flags.
 
-	+ calibras = 0 or 1: this flag declare the calibration on the monetary policy rule to be adopted, 0 for the active Central Bank, 0 for the passive one. This flag in turns calls two ancillary files, `usual_tp.mod` and `passive_tp.mod`, respectively. Every option of this flag produces and stores simulated time series for inflation and IRFs for selected and full set of variables, with labelling differences.
+	+ `calibras` = 0 or 1: this flag declare the calibration on the monetary policy rule to be adopted, 0 for the active Central Bank, 0 for the passive one. This flag in turns calls two ancillary files, `usual_tp.mod` and `passive_tp.mod`, respectively. Every option of this flag produces and stores simulated time series for inflation and IRFs for selected and full set of variables, with labelling differences.
 
 	+ `z_flag` = 1 activates an end-of-the-world liquidity shock, and needs to be declared with the previous flag. All other values for `z_flag` turn off this shock.
 

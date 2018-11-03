@@ -1,29 +1,49 @@
 % Code for NKPC with TFP shock 
 % 
-% Specific sticky prices, monopolistic competition, and liquidity
+% Calibration as in Gali 2015
 %
 % 
-% V0.6
+% V0.95
 
 %%%% Flags for conditional vars %%%%
 
-@#define calibras = 0
+%@#define calibras = 1
+
+% Flags are defined either when calling 
+% the Dynare command with -Dcalibras=0|1 or
+% uncommenting the line above.
 % defines a macro-variable to select among 
 % different specification of the TR: 
 %  - 0 for standard model with TP
 %  - 1 for model violating TP
 
+@#if calibras == 0
+	display('Model complying with Taylor Principle.')
+@#endif
+
+@#if calibras == 1
+	display('Model violating Taylor Principle.')
+@#endif
+
+@#if z_flag == 1
+	display('Liquidity DSGE: all shocks turned off, real liquidity shock.')
+@#endif
+
+
+set_dynare_seed(240588);
+
 
 %%%%% Variables declaration %%%%%
 
 % full set of vars
-var z y m pi s tfp e_mp b;
+var z y m pi s tfp e_mp b y_gap;
+
 
 % declaring state variables
 predetermined_variables z;
 
 % exogenous variables
-varexo e_ee e_pc e_tfp e_e_mp;
+varexo e_ee e_pc e_tfp e_e_mp e_z;
 
 % Parameters of the model,
 % to map into standard params
@@ -98,7 +118,7 @@ model(linear);
 #zbar=mbar + mbar^((1-alph)/(1-gammma));
 
 % real liquidity evolution
-z(+1) = z - pi(+1);
+z(+1) = z - pi(+1) - e_z;
 
 % euler eq / is curve
 y = ((1-alph)/eta)*m + y(+1) +(1/eta)*pi(+1)+ e_ee;
@@ -112,8 +132,9 @@ b = (zbar/(zbar-mbar))*z - (mbar/(zbar-mbar))*m;
 % Phillips curve loglin'd
 pi=bet*pi(+1) + kappa*(y - flex*tfp)+ e_pc;
 
-% Monetary policy rule
+% Monetary policy rule 
 s=theta*pi(+1) + e_mp;
+% add ygap: no change \\ change pi+1 to pi to see if model runs
 
 % AR for technology
 tfp=(1-rho_tfp)*tfpbar + rho_tfp*tfp(-1) + e_tfp;
@@ -125,11 +146,12 @@ e_mp=rho_mp*e_mp(-1) + e_e_mp;
 y_gap=(y - flex*tfp);
 
 end;
-
+    
 
 %%%%% Shocks declaration %%%%
 
 shocks;
+
 
 % Euler eq shock, off
 var e_ee; 	stderr .000;
@@ -137,11 +159,33 @@ var e_ee; 	stderr .000;
 % Phillips curve shock,off
 var e_pc; 	stderr .000;
 
+% regulars shocks
+@#if z_flag == 0
 % TFP shock
 var e_tfp;	stderr 1; % for non-standard-size shock
 
 % Mon Pol shock, 1% shock annualised (model in quarters)
 var e_e_mp; 	stderr 0.25^2;
+
+% Real liq. shock
+var e_z; 		stderr 0;
+@#endif
+
+
+
+% shock to z
+@#if z_flag == 1
+% TFP shock
+var e_tfp;	stderr 0; % for non-standard-size shock
+
+% Mon Pol shock, 1% shock annualised (model in quarters)
+var e_e_mp; 	stderr 0;
+
+% Real liq. shock
+var e_z; 		stderr 50;
+@#endif
+
+
 
 end;
 
@@ -153,37 +197,95 @@ stoch_simul(order=1, 		% approx order
 			irf=30,			% IRFs horizon			
 			periods=500000, % iterations to simulate
 			drop=100000, 	% burn-in drop			
-			replic=250)		% IRF iterations
-			y_gap pi s m z;   % vars to plot
+			replic=2500)		% IRF iterations
+			y_gap pi s m z b;   % vars to plot
+
+@#if calibras == 0
+	save('nkdtc_pi_tp.mat', 'pi', '-v6');
+@#endif
+
+@#if calibras == 1
+	save('nkdtc_pi_notp.mat', 'pi', '-v6');
+@#endif
 
 
-% verbatim;
-% % Scatterplot for Phillips Curve
-% figure('Name', 'y-gap vs inflation');
-% scatter(y-((xi+1)/(1+xi+zet*(eta-1)))*tfp, pi);
-% % print('scatter', '-depsc');
+
+@#if z_flag != 1
+verbatim;
+len=options_.irf;
+
+irf_tfp = figure('Name', 'TFP shock', 'visible', 'off');
 
 
-%%%%  Matlab commands  %%%%
-% verbatim;
-% min(m); % to verify whether m takes negative values
-% min(z); % to verify whether z takes negative values
-% nomin=i_rate(z, m, s, alph, gammma);
-% r_int=nomin - pi;
-% corr(nomin, pi)
-
-% figure('Name', 'Nominal interest rate');
-% plot(nomin((end-300):end));
-
-% figure('Name', 'Real interest rate');
-% plot(r_int((end-300):end));
+subplot(3,1,1);
+plot(oo_.irfs.y_gap_e_tfp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.6 .1]);
+ylabel('Output gap');
+hold off;
 
 
-%/* COMMENTS
-%- the magnitude of m and z coefficients is disproportionate
-%  it is sufficient to introduce b to appreciate this effect
+subplot(3,1,2);
+plot(oo_.irfs.pi_e_tfp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.25 .05]);
+ylabel('Inflation');
+hold off;
 
-%- should revise thoroughly the loglinearisation part to check whether some
-%   parameter is ill-placed
 
-%- code should get more elegant and complete, wrt dtc_full.mod
+subplot(3,1,3);
+plot(oo_.irfs.s_e_tfp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.25 .05]);
+ylabel('Interest rate');
+hold off;
+
+
+
+
+irf_mon = figure('Name', 'Monetary policy shock', 'visible', 'off');
+
+subplot(3,1,1);
+plot(oo_.irfs.y_gap_e_e_mp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.2 .005]);
+ylabel('Output gap');
+hold off;
+
+
+subplot(3,1,2);
+plot(oo_.irfs.pi_e_e_mp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf -.12 .005]);
+ylabel('Inflation');
+hold off;
+
+subplot(3,1,3);
+plot(oo_.irfs.s_e_e_mp, 'black', 'LineWidth', 4);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+axis([1 inf 0 .15]);
+ylabel('Interest rate');
+hold off;
+
+
+@#if calibras == 0
+print(irf_tfp, 'nkdtc_tp_tfp', '-dpdf', '-fillpage');
+print(irf_mon, 'nkdtc_tp_mp', '-dpdf', '-fillpage');
+@#endif
+
+
+@#if calibras == 1
+print(irf_tfp, 'nkdtc_notp_tfp', '-dpdf', '-fillpage');
+print(irf_mon, 'nkdtc_notp_mp', '-dpdf', '-fillpage');
+@#endif
+
+clear len;
+clear irf_tfp;
+clear irf_mon;
+@#endif

@@ -2,6 +2,11 @@
 *.log
 *.mat
 *.pdf
+nkdtc.m
+nkdtc_dynamic.m
+nkdtc_set_auxiliary_variables.m
+nkdtc_static.m
+nkdtc/
 
 # Compiled source #
 ###################
